@@ -1,6 +1,6 @@
-package com.example.ShareIt.booking;
+package com.example.ShareIt.booking.model;
 
-import com.example.ShareIt.item.Item;
+import com.example.ShareIt.item.model.Item;
 import lombok.Data;
 import org.apache.catalina.User;
 

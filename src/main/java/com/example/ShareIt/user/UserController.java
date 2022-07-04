@@ -1,5 +1,7 @@
 package com.example.ShareIt.user;
 
+import com.example.ShareIt.user.dto.UserDto;
+import com.example.ShareIt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +23,23 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody @Valid User user) {
-        return userService.create(user);
+    public UserDto create(@RequestBody @Valid User UserDto) {
+        return userService.create(UserDto);
     }
-    @PutMapping
-    public User update(@RequestBody User user) {
-        return userService.update(user);
+
+    @PatchMapping(value = "/{userId}")
+    public UserDto update(@PathVariable int userId,
+                          @RequestBody User UserDto) {
+        return userService.update(userId, UserDto);
     }
 
     @GetMapping(value = "/{userId}")
-    public User getUser(@PathVariable int userId) {
+    public UserDto getUser(@PathVariable int userId) {
         return userService.getUser(userId);
     }
+
     @GetMapping
-    public Collection<User> getAllUsers() {
+    public Collection<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 

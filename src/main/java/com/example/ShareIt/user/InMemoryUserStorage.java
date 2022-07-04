@@ -3,6 +3,7 @@ package com.example.ShareIt.user;
 
 import com.example.ShareIt.exception.EmailIsDublicated;
 import com.example.ShareIt.exception.InvalidUserIdException;
+import com.example.ShareIt.user.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -66,9 +67,9 @@ public class InMemoryUserStorage {
         return users.get(user.getId());
     }
 
-    public void delete(int userId) {
-        users.remove(userId);
-        log.info("field  with id={} deleted", userId);
+    public void delete(int userDtoId) {
+        users.remove(userDtoId);
+        log.info("field  with id={} deleted", userDtoId);
     }
 
     public Collection<User> getAllUsers() {
