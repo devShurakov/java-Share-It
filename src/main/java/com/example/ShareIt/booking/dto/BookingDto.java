@@ -1,7 +1,5 @@
-package com.example.ShareIt.booking;
+package com.example.ShareIt.booking.dto;
 
-import com.example.ShareIt.item.Item;
-import com.example.ShareIt.item.ItemDto;
 import org.apache.catalina.User;
 
 import java.time.LocalDate;

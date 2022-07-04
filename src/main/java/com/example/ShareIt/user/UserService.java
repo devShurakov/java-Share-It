@@ -1,36 +1,34 @@
 package com.example.ShareIt.user;
 
-
-import org.springframework.stereotype.Component;
+import com.example.ShareIt.user.dto.UserDto;
+import com.example.ShareIt.user.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-@Component
-public class UserService {
-
+@Service
+public class UserService implements UserServiceImpl{
     private final InMemoryUserStorage inMemoryUserStorage;
-
     public UserService(InMemoryUserStorage inMemoryUserStorage) {
         this.inMemoryUserStorage = inMemoryUserStorage;
     }
-
-    public User create(User user) {
-        return inMemoryUserStorage.create(user);
+    public UserDto create(User userDto) {
+        User user = inMemoryUserStorage.create(UserMapper.mapToUser(userDto));
+        return UserMapper.mapToUserDto(user);
     }
-
-    public User update(User user) {
-        return inMemoryUserStorage.update(user);
+    public UserDto update(int userId, User userDto) {
+        User user = inMemoryUserStorage.update(UserMapper.mapToUser(userDto, userId));
+        return UserMapper.mapToUserDto(user);
     }
-
-    public User getUser(int userId) {
-        return inMemoryUserStorage.getUser(userId);
+    public UserDto getUser(int userId) {
+        User user = inMemoryUserStorage.getUser(userId);
+        return UserMapper.mapToUserDto(user);
     }
-
-    public Collection<User> getAllUsers() {
-        return inMemoryUserStorage.getAllUsers();
+    public Collection<UserDto> getAllUsers() {
+        Collection<User> userItems = inMemoryUserStorage.getAllUsers();
+        return UserMapper.maptoAllUserDto(userItems);
     }
-
-    public void delete(int userId) {
-        inMemoryUserStorage.delete(userId);
+    public void delete(int userDtoId) {
+        inMemoryUserStorage.delete(userDtoId);
     }
 }

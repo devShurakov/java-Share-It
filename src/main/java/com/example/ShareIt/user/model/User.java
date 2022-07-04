@@ -1,6 +1,7 @@
-package com.example.ShareIt.user;
+package com.example.ShareIt.user.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Validated
+@NoArgsConstructor
 public class User {
     int id;
     String name;
