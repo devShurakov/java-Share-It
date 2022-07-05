@@ -17,11 +17,4 @@ public class ItemDto {
     String description;
     @Value("${some.key:null}")
     boolean available;
-    public ItemDto(int id, String name, String description, boolean available) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.available = available;
-    }
-
 }

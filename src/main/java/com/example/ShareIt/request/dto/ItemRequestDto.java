@@ -1,12 +1,10 @@
 package com.example.ShareIt.request.dto;
 
-import org.apache.catalina.User;
-
 import java.time.LocalDate;
 
 public class ItemRequestDto {
     int id;
     String description;
-    User requestor;
+    int requestor;
     LocalDate created;
 }

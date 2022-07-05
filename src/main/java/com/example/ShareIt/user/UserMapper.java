@@ -2,13 +2,14 @@ package com.example.ShareIt.user;
 
 import com.example.ShareIt.user.dto.UserDto;
 import com.example.ShareIt.user.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Service
 public class UserMapper {
-    public static User mapToUser(User userDto) {
+    public static User mapToUser(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setName(userDto.getName());
@@ -16,7 +17,7 @@ public class UserMapper {
         return user;
     }
 
-    public static User mapToUser(User userDto, int userId) {
+    public static User mapToUser(UserDto userDto, int userId) {
         User user = new User();
         user.setId(userId);
         user.setName(userDto.getName());

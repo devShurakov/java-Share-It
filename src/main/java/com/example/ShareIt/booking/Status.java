@@ -11,11 +11,9 @@ public enum Status {
     REJECTED("Бронирование отклонено владельцем"),
     CANCELED("Бронирование отменено создателем");
     private final String title;
-
     Status(String title) {
         this.title = title;
     }
-
     public String getStatus() {
         return title;
     }
