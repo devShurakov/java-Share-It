@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -16,12 +17,6 @@ public class ItemDto {
     @NotNull
     String description;
     @Value("${some.key:null}")
-    boolean available;
-    public ItemDto(int id, String name, String description, boolean available) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.available = available;
-    }
-
+    Optional<Boolean> available;
 }
+
