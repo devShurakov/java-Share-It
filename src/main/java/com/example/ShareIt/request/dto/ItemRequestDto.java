@@ -7,6 +7,6 @@ import java.time.LocalDate;
 public class ItemRequestDto {
     int id;
     String description;
-    User requestor;
+    int requestor;
     LocalDate created;
 }
