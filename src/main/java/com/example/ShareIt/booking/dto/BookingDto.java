@@ -1,4 +1,4 @@
-package ru.practicum.shareit.booking.dto;
+package com.example.ShareIt.booking.dto;
 
 /**
  * // TODO .

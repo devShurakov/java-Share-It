@@ -1,4 +1,4 @@
-package ru.practicum.shareit.requests.model;
+package com.example.ShareIt.requests.model;
 
 /**
  * // TODO .
