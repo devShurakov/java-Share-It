@@ -61,9 +61,7 @@ public class ItemMapper {
     public ItemForResultDto.Booking mapToItemForResultDtoBooking(Booking booking) {
         ItemForResultDto.Booking itemForResultDto = new ItemForResultDto.Booking();
 
-        if(booking == null){
-            return null;
-        }
+        if (booking == null) return null;
 
         itemForResultDto.setId(booking.getId());
         itemForResultDto.setBookerId(booking.getBooker().getId());

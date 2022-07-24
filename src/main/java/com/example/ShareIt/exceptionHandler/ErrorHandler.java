@@ -98,6 +98,7 @@ public class ErrorHandler {
     public void statusCodeIs400ForBookingAlreadyException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
+
     @ExceptionHandler(UserNotBookedItemException.class)
     public void statusCodeIs400CommentException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());

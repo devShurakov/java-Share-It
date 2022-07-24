@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ItemForResultDto {
+public class ItemForResultDto{
 
     private long id;
 
@@ -26,6 +26,7 @@ public class ItemForResultDto {
 
     private Booking nextBooking;
 
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -35,6 +36,7 @@ public class ItemForResultDto {
         private long id;
 
         private long bookerId;
+
     }
 
     @Setter
@@ -50,6 +52,7 @@ public class ItemForResultDto {
         String authorName;
 
         LocalDateTime created;
+
     }
 
 }

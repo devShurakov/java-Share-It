@@ -67,15 +67,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public ItemDto create(int userId, ItemDto itemDto) {
+
         Item item = itemMapper.mapToItem(itemDto, userId);
         item.setOwner(userService.getUser(userId));
+
         return itemMapper.mapToItemDto(itemRepository.save(item));
     }
 
     public ItemDto update(int userId, int itemId, ItemDto itemDto) {
-        Item item = itemRepository.findById((long) itemId).orElseThrow(() -> {
-            return new ItemNotFoundException(String.format("Entity with id %d not found", itemDto.getId()));
-        });
+
+        Item item = itemRepository.findById((long) itemId).orElseThrow(() ->
+                new ItemNotFoundException(String.format("Entity with id %d not found", itemDto.getId())));
 
         if (check((long) userId, item) == false) {
             throw new ItemDoesNotBelongException("Item doesn't belong User");
@@ -100,51 +102,62 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public ItemForResultDto getItemDto(int userId, long itemId) {
+
         Item item = itemRepository.findById(itemId).orElseThrow(() ->
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
+
         LocalDateTime now = LocalDateTime.now();
+
         ItemForResultDto itemForResultDto = itemMapper.mapToItemForResultDto(item);
-            itemForResultDto.setComments(commentMapper.mapToCommentDtoCollection(commentRepository.
-                    findAllByItem_Id(itemId)));
+            itemForResultDto.setComments(commentMapper
+                    .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
 
         if (item.getOwner().getId() == userId) {
             itemForResultDto.setNextBooking(getLastBooking(itemId, now));
             itemForResultDto.setLastBooking(getPreviousBooking(itemId, now));
-            itemForResultDto.setComments(commentMapper.mapToCommentDtoCollection(commentRepository.
-                    findAllByItem_Id(itemId)));
+            itemForResultDto.setComments(commentMapper
+                    .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
             return itemForResultDto;
         }
 
         ItemForResultDto itemForResultDto2 = itemMapper.mapToItemForResultDtoUserBooking(item);
-        itemForResultDto2.setComments(commentMapper.mapToCommentDtoCollection(commentRepository.
-                findAllByItem_Id(itemId)));
+        itemForResultDto2.setComments(commentMapper
+                .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
+
         return itemForResultDto2;
     }
 
     public ItemForResultDto.Booking getPreviousBooking(long itemId, LocalDateTime now) {
-        return itemMapper.mapToItemForResultDtoBooking(bookingRepository.
-                findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
+
+        return itemMapper.mapToItemForResultDtoBooking(bookingRepository
+                .findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
                 .stream()
                 .max(Comparator.comparing(Booking::getEnd))
                 .orElse(null));
     }
 
     public ItemForResultDto.Booking getLastBooking(long itemId, LocalDateTime now) {
-        return itemMapper.mapToItemForResultDtoBooking(bookingRepository.
-                findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now).stream().findFirst().orElse(null));
+
+        return itemMapper.mapToItemForResultDtoBooking(bookingRepository
+                .findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now)
+                .stream().findFirst().orElse(null));
     }
 
     public Item getItem(long itemId) {
+
         return itemRepository.findById(itemId).orElseThrow(() ->
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
     }
 
     public Collection<ItemForResultDto> getAllItems(int userId) {
+
         Collection<Item> userItems = itemRepository.findAll()
                 .stream()
                 .filter(item -> item.getOwner().getId() == userId)
                 .collect(Collectors.toList());
+
         LocalDateTime now = LocalDateTime.now();
+
         Collection returnColl = new ArrayList();
 
         for (Item x : userItems) {
@@ -158,6 +171,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public CommentDto createComment(CommentDto commentDto, long userId, Long itemId) {
+
         Collection<BookingDto> dtos = getByUserAndItem(userId, itemId)
                 .stream()
                 .filter(i -> i.getStatus() == BookingStatus.APPROVED)
@@ -172,12 +186,14 @@ public class ItemServiceImpl implements ItemService {
         comment.setItem(getItem(itemId));
         comment.setAuthor(userService.getUser(userId));
         comment.setCreated(LocalDateTime.now());
+
         return commentMapper.mapToCommentDto(commentRepository.save(comment),
                 userService.getUser(userId).getName());
     }
 
     @Transactional
     public List<BookingDto> getByUserAndItem(long userId, long itemId) {
+
         return bookingMapper.maptoAllBookingToDto(bookingRepository.findAllByBooker_IdAndItem_Id(userId, itemId));
     }
 
