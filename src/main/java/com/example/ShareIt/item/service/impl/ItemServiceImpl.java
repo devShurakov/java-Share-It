@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class ItemServiceImpl implements ItemService {
-
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
     private final UserService userService;
@@ -61,7 +60,6 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById((long) itemId).orElseThrow(() -> {
             return new ItemNotFoundException(String.format("Entity with id %d not found", itemDto.getId()));
         });
-
         if (check((long) userId, item) == false) {
             throw new ItemDoesNotBelongException("Item doesn't belong User");
         }
@@ -77,7 +75,6 @@ public class ItemServiceImpl implements ItemService {
             log.info("Update name on {}", item.getName());
             item.setName(itemDto.getName());
         }
-
         return itemMapper.mapToItemDto(itemRepository.save(item));
     }
 
@@ -107,7 +104,6 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.mapToItemForResultDtoBooking(bookingRepository.findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now).stream().findFirst().orElse(null));
     }
 
-
     public Item getItem(long itemId) {
         return itemRepository.findById(itemId).orElseThrow(() -> {
             return new ItemNotFoundException(String.format("Entity with id %d not found", itemId));
@@ -127,7 +123,6 @@ public class ItemServiceImpl implements ItemService {
         return returnColl;
     }
 
-
     public CommentDto createComment(CommentDto commentDto, long userId, Long itemId) {
         Collection<BookingDto> dtos = getByUserAndItem(userId, itemId)
                 .stream()
@@ -143,7 +138,6 @@ public class ItemServiceImpl implements ItemService {
         comment.setCreated(LocalDateTime.now());
         return commentMapper.mapToCommentDto(commentRepository.save(comment),
                 userService.getUser(userId).getName());
-
     }
 
     @Transactional

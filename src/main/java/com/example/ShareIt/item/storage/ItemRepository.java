@@ -1,6 +1,5 @@
 package com.example.ShareIt.item.storage;
 
-import com.example.ShareIt.item.dto.ItemDto;
 import com.example.ShareIt.item.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
