@@ -47,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
     private final CommentRepository commentRepository;
 
     @Autowired
-    public ItemServiceImpl (ItemRepository itemRepository, ItemMapper itemMapper, UserService userService,
+    public ItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper, UserService userService,
                            BookingRepository bookingRepository, CommentMapper commentMapper,
                            CommentRepository commentRepository, BookingMapper bookingMapper) {
 
@@ -66,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
         this.bookingMapper = bookingMapper;
     }
 
-    public ItemDto create (int userId, ItemDto itemDto) {
+    public ItemDto create(int userId, ItemDto itemDto) {
 
         Item item = itemMapper.mapToItem(itemDto, userId);
         item.setOwner(userService.getUser(userId));
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.mapToItemDto(itemRepository.save(item));
     }
 
-    public ItemDto update (int userId, int itemId, ItemDto itemDto) {
+    public ItemDto update(int userId, int itemId, ItemDto itemDto) {
 
         Item item = itemRepository.findById((long) itemId).orElseThrow(() ->
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemDto.getId())));
@@ -101,7 +101,7 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.mapToItemDto(itemRepository.save(item));
     }
 
-    public ItemForResultDto getItemDto (int userId, long itemId) {
+    public ItemForResultDto getItemDto(int userId, long itemId) {
 
         Item item = itemRepository.findById(itemId).orElseThrow(() ->
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
@@ -127,7 +127,7 @@ public class ItemServiceImpl implements ItemService {
         return itemForResultDto2;
     }
 
-    public ItemForResultDto.Booking getPreviousBooking (long itemId, LocalDateTime now) {
+    public ItemForResultDto.Booking getPreviousBooking(long itemId, LocalDateTime now) {
 
         return itemMapper.mapToItemForResultDtoBooking(bookingRepository
                 .findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
@@ -136,7 +136,7 @@ public class ItemServiceImpl implements ItemService {
                 .orElse(null));
     }
 
-    public ItemForResultDto.Booking getLastBooking (long itemId, LocalDateTime now) {
+    public ItemForResultDto.Booking getLastBooking(long itemId, LocalDateTime now) {
 
         return itemMapper.mapToItemForResultDtoBooking(bookingRepository
                 .findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now)
@@ -149,7 +149,7 @@ public class ItemServiceImpl implements ItemService {
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
     }
 
-    public Collection<ItemForResultDto> getAllItems (int userId) {
+    public Collection<ItemForResultDto> getAllItems(int userId) {
 
         Collection<Item> userItems = itemRepository.findAll()
                 .stream()
@@ -170,7 +170,7 @@ public class ItemServiceImpl implements ItemService {
         return returnColl;
     }
 
-    public CommentDto createComment (CommentDto commentDto, long userId, Long itemId) {
+    public CommentDto createComment(CommentDto commentDto, long userId, Long itemId) {
 
         Collection<BookingDto> dtos = getByUserAndItem(userId, itemId)
                 .stream()
@@ -192,12 +192,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Transactional
-    public List<BookingDto> getByUserAndItem (long userId, long itemId) {
+    public List<BookingDto> getByUserAndItem(long userId, long itemId) {
 
         return bookingMapper.maptoAllBookingToDto(bookingRepository.findAllByBooker_IdAndItem_Id(userId, itemId));
     }
 
-    public Collection<ItemDto> search (String text) {
+    public Collection<ItemDto> search(String text) {
 
         if (text.isBlank()) {
             return Collections.emptyList();
@@ -206,7 +206,7 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.maptoAllItemDto(itemRepository.search(text));
     }
 
-    private boolean check (Long userId, Item item) {
+    private boolean check(Long userId, Item item) {
 
         if (item.getOwner().getId().equals(userId)) {
             return true;
