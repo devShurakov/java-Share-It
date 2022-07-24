@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ItemForResultDto{
+public class ItemForResultDto {
 
     private long id;
 
