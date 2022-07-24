@@ -3,17 +3,18 @@ package com.example.ShareIt.user.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Validated
 public class UserDto {
-    int id;
+    long id;
     String name;
     @Email
+    @NotBlank
     String email;
+
 }

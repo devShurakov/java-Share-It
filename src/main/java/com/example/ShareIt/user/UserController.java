@@ -1,9 +1,8 @@
 package com.example.ShareIt.user;
 
 import com.example.ShareIt.user.dto.UserDto;
-import com.example.ShareIt.user.model.User;
+import com.example.ShareIt.user.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +10,6 @@ import java.util.Collection;
 
 
 @RestController
-@Validated
 @RequestMapping(value = "/users")
 public class UserController {
 
@@ -35,7 +33,7 @@ public class UserController {
 
     @GetMapping(value = "/{userId}")
     public UserDto getUser(@PathVariable int userId) {
-        return userService.getUser(userId);
+        return userService.getDtoUser(userId);
     }
 
     @GetMapping
