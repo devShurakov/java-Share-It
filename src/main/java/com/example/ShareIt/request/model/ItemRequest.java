@@ -1,14 +1,28 @@
 package com.example.ShareIt.request.model;
 
-import lombok.Data;
-import org.apache.catalina.User;
+import com.example.ShareIt.user.model.User;
+import lombok.*;
 
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "item_requests")
 public class ItemRequest {
-    int id;
-    String description;
-    User requestor;
-    LocalDate created;
+
+    @Column(name = "id")
+    @Id
+    Long id;
+    @Column(name = "description")
+    private String description;
+    @ManyToOne()
+    @JoinColumn(name = "requester_id", referencedColumnName = "id")
+    private User request;
+    @Column(name = "created")
+    private LocalDateTime created;
+
 }

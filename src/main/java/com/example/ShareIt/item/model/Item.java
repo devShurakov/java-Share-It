@@ -1,30 +1,38 @@
 package com.example.ShareIt.item.model;
 
 import com.example.ShareIt.request.model.ItemRequest;
+import com.example.ShareIt.user.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Validated
+@Entity
+@Table(name = "items")
 public class Item {
-    int id;
-    String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "name", nullable = false)
+    private String name;
     @NotNull
-    String description;
-    boolean available;
-    int owner;
-    ItemRequest request;
-
-    public Item(int id, String name, String description, boolean available, int owner) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.available = available;
-        this.owner = owner;
-    }
+    @Column(name = "description", nullable = false)
+    private String description;
+    @Column(name = "available", nullable = false)
+    private Boolean available;
+    @ManyToOne()
+    @JoinColumn(name = "owner_id")
+    private User owner;
+    @OneToOne()
+    @JoinColumn(name = "request_id", referencedColumnName = "id")
+    private ItemRequest request;
 
 }

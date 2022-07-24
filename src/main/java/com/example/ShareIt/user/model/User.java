@@ -1,28 +1,25 @@
 package com.example.ShareIt.user.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
-@Data
-@Validated
+@AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Validated
+@Entity
+@Table(name = "users")
 public class User {
-    int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    Long id;
+    @Column(name = "name", nullable = false)
     String name;
-    @Email
-    @NotNull
-    @NotBlank
+    @Column(name = "email", nullable = false)
     String email;
-
-    public User(int id,  String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
 
 }
