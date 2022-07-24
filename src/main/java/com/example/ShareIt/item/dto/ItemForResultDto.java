@@ -13,11 +13,17 @@ import java.util.List;
 public class ItemForResultDto {
 
     private long id;
+
     private String name;
+
     private String description;
+
     private boolean available;
+
     private List<ItemForResultDto.Comment> comments;
+
     private Booking lastBooking;
+
     private Booking nextBooking;
 
     @AllArgsConstructor
@@ -27,6 +33,7 @@ public class ItemForResultDto {
     public static class Booking {
 
         private long id;
+
         private long bookerId;
     }
 
@@ -35,9 +42,13 @@ public class ItemForResultDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Comment {
+
         Long id;
+
         String text;
+
         String authorName;
+
         LocalDateTime created;
     }
 

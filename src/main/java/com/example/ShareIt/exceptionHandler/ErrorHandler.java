@@ -29,13 +29,13 @@ public class ErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> DataIsNotValid(final MethodArgumentNotValidException e) {
+    public Map<String, String> dataIsNotValid(final MethodArgumentNotValidException e) {
         return Map.of("error", "invalid user data");
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> DataIsNotValid(final ConstraintViolationException e) {
+    public Map<String, String> dataIsNotValid(final ConstraintViolationException e) {
         return Map.of("error", "invalid item data");
     }
 
@@ -63,6 +63,7 @@ public class ErrorHandler {
     public void statusCodeIs400forBooking(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
+
     @ExceptionHandler(ItemFailedForBookingException.class)
     public void statusCodeIs404forBooking(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());

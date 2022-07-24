@@ -21,14 +21,14 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto create(@RequestBody @Valid UserDto UserDto) {
-        return userService.create(UserDto);
+    public UserDto create(@RequestBody @Valid UserDto userDto) {
+        return userService.create(userDto);
     }
 
     @PatchMapping(value = "/{userId}")
     public UserDto update(@PathVariable int userId,
-                          @RequestBody UserDto UserDto) {
-        return userService.update(userId, UserDto);
+                          @RequestBody UserDto userDto) {
+        return userService.update(userId, userDto);
     }
 
     @GetMapping(value = "/{userId}")

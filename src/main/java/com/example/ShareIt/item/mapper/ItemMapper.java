@@ -25,12 +25,15 @@ public class ItemMapper {
 
     public Item mapToItem(ItemDto itemDto, int userId) {
         Item item = new Item();
+
         if (String.valueOf(itemDto.getAvailable()).isEmpty()) {
             throw new InvalidUserIdException("cannot be null");
         }
+
         if (itemDto.getName().isEmpty() || itemDto.getDescription().isEmpty()) {
             throw new InvalidUserIdException("cannot be null");
         }
+
         item.setId(itemDto.getId());
         item.setName(itemDto.getName());
         item.setDescription(itemDto.getDescription());
@@ -56,25 +59,27 @@ public class ItemMapper {
     }
 
     public ItemForResultDto.Booking mapToItemForResultDtoBooking(Booking booking) {
-        ItemForResultDto.Booking ItemForResultDto = new ItemForResultDto.Booking();
+        ItemForResultDto.Booking itemForResultDto = new ItemForResultDto.Booking();
+
         if(booking == null){
             return null;
         }
-        ItemForResultDto.setId(booking.getId());
-        ItemForResultDto.setBookerId(booking.getBooker().getId());
-        return  ItemForResultDto;
+
+        itemForResultDto.setId(booking.getId());
+        itemForResultDto.setBookerId(booking.getBooker().getId());
+        return  itemForResultDto;
     }
 
     public ItemForResultDto mapToItemForResultDtoUserBooking(Item item) {
-        ItemForResultDto ItemForResultDto = new ItemForResultDto();
-        ItemForResultDto.setId(item.getId());
-        ItemForResultDto.setName(item.getName());
-        ItemForResultDto.setDescription(item.getDescription());
-        ItemForResultDto.setAvailable(item.getAvailable());
-        ItemForResultDto.setComments(null);
-        ItemForResultDto.setLastBooking(null);
-        ItemForResultDto.setNextBooking(null);
-        return  ItemForResultDto;
+        ItemForResultDto itemForResultDto = new ItemForResultDto();
+        itemForResultDto.setId(item.getId());
+        itemForResultDto.setName(item.getName());
+        itemForResultDto.setDescription(item.getDescription());
+        itemForResultDto.setAvailable(item.getAvailable());
+        itemForResultDto.setComments(null);
+        itemForResultDto.setLastBooking(null);
+        itemForResultDto.setNextBooking(null);
+        return  itemForResultDto;
     }
 
 }

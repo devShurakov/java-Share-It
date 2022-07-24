@@ -16,15 +16,19 @@ import java.util.Collection;
 public class UserService implements com.example.ShareIt.user.service.UserService {
 
     private final UserRepository userRepository;
+
     private final UserMapper userMapper;
 
     @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper) {
+
         this.userRepository = userRepository;
+
         this.userMapper = userMapper;
     }
 
     public UserDto create(UserDto userDto) {
+
         userRepository.findAll().stream().forEach(i -> {
             if (i.getEmail() == userDto.getEmail()) {
                 throw new RuntimeException();
@@ -36,6 +40,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     }
 
     public UserDto update(int userId, UserDto userDto) {
+
         User user = getUser(userId);
         if (userDto.getName() != null) {
             log.info("Update name to {}", userDto.getName());
@@ -50,6 +55,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
 
     @Override
     public UserDto getDtoUser(long userId) {
+
         User user = userRepository.findById((long) userId).orElseThrow(() -> {
             log.warn("entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
@@ -58,6 +64,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     }
 
     public User getUser(long userId) {
+
         User user = userRepository.findById(userId).orElseThrow(() -> {
             log.warn("entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
@@ -66,12 +73,14 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     }
 
     public Collection<UserDto> getAllUsers() {
+
         Collection<User> userItems = userRepository.findAll();
         log.info("all users");
         return userMapper.maptoAllUserDto(userItems);
     }
 
     public void delete(int userDtoId) {
+
         log.info("User was deleted");
         userRepository.deleteById((long) userDtoId);
     }
