@@ -14,14 +14,17 @@ import java.util.List;
 public class BookingMapper {
 
     public static Booking mapToBooking(BookingPostDto bookingPostDto) {
+
         Booking booking = new Booking();
         booking.setId(bookingPostDto.getId());
         booking.setStart(bookingPostDto.getStart());
         booking.setEnd(bookingPostDto.getEnd());
+
         return booking;
     }
 
     public static BookingDto mapToBookingDto(Booking booking) {
+
         return new BookingDto(
                 booking.getId(),
                 booking.getStart(),
@@ -29,11 +32,14 @@ public class BookingMapper {
                 new BookingDto.User(booking.getBooker().getId(),booking.getBooker().getName()),
                 new BookingDto.Item(booking.getItem().getId(),booking.getItem().getName(),booking.getItem().getDescription()),
                 booking.getBookingStatus()
+
         );
     }
 
     public static List<BookingDto> maptoAllBookingToDto(Collection<Booking> booking) {
+
         List<BookingDto> dtos = new ArrayList<>();
+
         for (Booking x : booking) {
             dtos.add(mapToBookingDto(x));
         }

@@ -40,7 +40,7 @@ public class ItemController {
     @GetMapping(value = "/{itemId}")
     public ItemForResultDto getItem(@RequestHeader(name = header) @NotNull int userId,
                                     @PathVariable long itemId) {
-        return itemService.getItemDto(userId,itemId);
+        return itemService.getAll(userId,itemId);
     }
 
     @GetMapping

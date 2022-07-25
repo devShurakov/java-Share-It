@@ -16,7 +16,7 @@ public interface ItemService {
 
     Item getItem(long itemId);
 
-    ItemForResultDto getItemDto(int userId, long itemId);
+    ItemForResultDto getAll(int userId, long itemId);
 
     Collection<ItemForResultDto> getAllItems(int userId);
 

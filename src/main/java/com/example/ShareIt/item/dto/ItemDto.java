@@ -13,11 +13,14 @@ import javax.validation.constraints.NotNull;
 public class ItemDto {
 
     Long id;
+
     @NotNull
     @NotBlank
     String name;
+
     @NotNull
     String description;
+
     @NotNull
     Boolean available;
 

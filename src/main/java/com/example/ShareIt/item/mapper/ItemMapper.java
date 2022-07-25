@@ -14,16 +14,19 @@ import java.util.List;
 @Service
 public class ItemMapper {
     public static ItemForResultDto mapToItemForResultDto(Item item) {
-        ItemForResultDto itemForResultDto = new ItemForResultDto();
-        itemForResultDto.setId(item.getId());
-        itemForResultDto.setName(item.getName());
-        itemForResultDto.setDescription(item.getDescription());
-        itemForResultDto.setAvailable(item.getAvailable());
-        itemForResultDto.setComments(null);
-        return itemForResultDto;
+
+        ItemForResultDto itemForResult = new ItemForResultDto();
+        itemForResult.setId(item.getId());
+        itemForResult.setName(item.getName());
+        itemForResult.setDescription(item.getDescription());
+        itemForResult.setAvailable(item.getAvailable());
+        itemForResult.setComments(null);
+
+        return itemForResult;
     }
 
     public Item mapToItem(ItemDto itemDto, int userId) {
+
         Item item = new Item();
 
         if (String.valueOf(itemDto.getAvailable()).isEmpty()) {
@@ -38,20 +41,25 @@ public class ItemMapper {
         item.setName(itemDto.getName());
         item.setDescription(itemDto.getDescription());
         item.setAvailable(itemDto.getAvailable());
+
         return item;
     }
 
     public ItemDto mapToItemDto(Item item) {
+
         ItemDto itemDto = new ItemDto();
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
+
         return itemDto;
     }
 
     public Collection<ItemDto> maptoAllItemDto(Collection<Item> item) {
+
         List<ItemDto> dtos = new ArrayList<>();
+
         for (Item x : item) {
             dtos.add(mapToItemDto(x));
         }
@@ -59,25 +67,30 @@ public class ItemMapper {
     }
 
     public ItemForResultDto.Booking mapToItemForResultDtoBooking(Booking booking) {
-        ItemForResultDto.Booking itemForResultDto = new ItemForResultDto.Booking();
+
+        ItemForResultDto.Booking item = new ItemForResultDto.Booking();
 
         if (booking == null) return null;
 
-        itemForResultDto.setId(booking.getId());
-        itemForResultDto.setBookerId(booking.getBooker().getId());
-        return  itemForResultDto;
+        item.setId(booking.getId());
+        item.setBookerId(booking.getBooker().getId());
+
+        return  item;
     }
 
     public ItemForResultDto mapToItemForResultDtoUserBooking(Item item) {
-        ItemForResultDto itemForResultDto = new ItemForResultDto();
-        itemForResultDto.setId(item.getId());
-        itemForResultDto.setName(item.getName());
-        itemForResultDto.setDescription(item.getDescription());
-        itemForResultDto.setAvailable(item.getAvailable());
-        itemForResultDto.setComments(null);
-        itemForResultDto.setLastBooking(null);
-        itemForResultDto.setNextBooking(null);
-        return  itemForResultDto;
+
+        ItemForResultDto itemForResult = new ItemForResultDto();
+
+        itemForResult.setId(item.getId());
+        itemForResult.setName(item.getName());
+        itemForResult.setDescription(item.getDescription());
+        itemForResult.setAvailable(item.getAvailable());
+        itemForResult.setComments(null);
+        itemForResult.setLastBooking(null);
+        itemForResult.setNextBooking(null);
+
+        return  itemForResult;
     }
 
 }

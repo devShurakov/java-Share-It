@@ -101,33 +101,33 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.mapToItemDto(itemRepository.save(item));
     }
 
-    public ItemForResultDto getItemDto(int userId, long itemId) {
+    public ItemForResultDto getAll(int userId, long itemId) {
 
         Item item = itemRepository.findById(itemId).orElseThrow(() ->
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
 
         LocalDateTime now = LocalDateTime.now();
 
-        ItemForResultDto itemForResultDto = itemMapper.mapToItemForResultDto(item);
-            itemForResultDto.setComments(commentMapper
+        ItemForResultDto itemForOwner = itemMapper.mapToItemForResultDto(item);
+            itemForOwner.setComments(commentMapper
                     .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
 
         if (item.getOwner().getId() == userId) {
-            itemForResultDto.setNextBooking(getLastBooking(itemId, now));
-            itemForResultDto.setLastBooking(getPreviousBooking(itemId, now));
-            itemForResultDto.setComments(commentMapper
+            itemForOwner.setNextBooking(getLastBooking(itemId, now));
+            itemForOwner.setLastBooking(getPreviousBooking(itemId, now));
+            itemForOwner.setComments(commentMapper
                     .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
-            return itemForResultDto;
+            return itemForOwner;
         }
 
-        ItemForResultDto itemForResultDto2 = itemMapper.mapToItemForResultDtoUserBooking(item);
-        itemForResultDto2.setComments(commentMapper
+        ItemForResultDto itemForUser = itemMapper.mapToItemForResultDtoUserBooking(item);
+        itemForUser.setComments(commentMapper
                 .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
 
-        return itemForResultDto2;
+        return itemForUser;
     }
 
-    public ItemForResultDto.Booking getPreviousBooking(long itemId, LocalDateTime now) {
+    private ItemForResultDto.Booking getPreviousBooking(long itemId, LocalDateTime now) {
 
         return itemMapper.mapToItemForResultDtoBooking(bookingRepository
                 .findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
@@ -136,7 +136,7 @@ public class ItemServiceImpl implements ItemService {
                 .orElse(null));
     }
 
-    public ItemForResultDto.Booking getLastBooking(long itemId, LocalDateTime now) {
+    private ItemForResultDto.Booking getLastBooking(long itemId, LocalDateTime now) {
 
         return itemMapper.mapToItemForResultDtoBooking(bookingRepository
                 .findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now)
@@ -161,10 +161,10 @@ public class ItemServiceImpl implements ItemService {
         Collection returnColl = new ArrayList();
 
         for (Item x : userItems) {
-            ItemForResultDto itemForResultDto = itemMapper.mapToItemForResultDto(x);
-            itemForResultDto.setNextBooking(getLastBooking(x.getId(), now));
-            itemForResultDto.setLastBooking(getPreviousBooking(x.getId(), now));
-            returnColl.add(itemForResultDto);
+            ItemForResultDto item = itemMapper.mapToItemForResultDto(x);
+            item.setNextBooking(getLastBooking(x.getId(), now));
+            item.setLastBooking(getPreviousBooking(x.getId(), now));
+            returnColl.add(item);
         }
 
         return returnColl;
@@ -174,7 +174,7 @@ public class ItemServiceImpl implements ItemService {
 
         Collection<BookingDto> dtos = getByUserAndItem(userId, itemId)
                 .stream()
-                .filter(i -> i.getStatus() == BookingStatus.APPROVED)
+                .filter(i -> i.getStatus().contains(BookingStatus.APPROVED.name()))
                 .filter(i -> i.getEnd().isBefore(LocalDateTime.now()))
                 .collect(Collectors.toList());
 
@@ -211,6 +211,7 @@ public class ItemServiceImpl implements ItemService {
         if (item.getOwner().getId().equals(userId)) {
             return true;
         }
+
         return false;
     }
 }

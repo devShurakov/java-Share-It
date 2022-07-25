@@ -17,11 +17,14 @@ import java.time.LocalDateTime;
 public class CommentDto {
 
     Long id;
+
     @NotNull
     @NotBlank
     @Size(max = 5000)
     private String text;
+
     private String authorName;
+
     private LocalDateTime created;
 
 }

@@ -16,12 +16,15 @@ import java.time.LocalDateTime;
 public class BookingPostDto {
 
     Long id;
+
     @NotNull
     @DateTimeFormat(fallbackPatterns = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime start;
+
     @NotNull
     @DateTimeFormat(fallbackPatterns = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime end;
+
     @NotNull
     private Long itemId;
 

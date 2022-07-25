@@ -18,19 +18,25 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "items")
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @Column(name = "name", nullable = false)
     private String name;
+
     @NotNull
     @Column(name = "description", nullable = false)
     private String description;
+
     @Column(name = "available", nullable = false)
     private Boolean available;
+
     @ManyToOne()
     @JoinColumn(name = "owner_id")
     private User owner;
+
     @OneToOne()
     @JoinColumn(name = "request_id", referencedColumnName = "id")
     private ItemRequest request;
