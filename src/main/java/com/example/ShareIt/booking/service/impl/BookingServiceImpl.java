@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -124,9 +123,9 @@ public class BookingServiceImpl implements BookingService {
 
         Collection<Booking> ids = bookingRepository.findBookingsByBookerIdOrderByStartDesc(userId);
 
-        Collection<Long> ids2 =new ArrayList();
+        Collection<Long> ids2 = new ArrayList();
 
-        for (Booking x: ids){
+        for (Booking x: ids) {
             ids2.add(x.getItem().getId());
         }
 
@@ -164,9 +163,10 @@ public class BookingServiceImpl implements BookingService {
     public Collection<BookingDto> getAllByForOwner(long userId, String state) {
 
         Collection<Booking> bookings = bookingRepository.findAllByItem_Owner_IdOrderByStartDesc(userId);
-        Collection<Long> ids2 =new ArrayList();
 
-        for (Booking x: bookings){
+        Collection<Long> ids2 = new ArrayList();
+
+        for (Booking x: bookings) {
             ids2.add(x.getItem().getId());
         }
 

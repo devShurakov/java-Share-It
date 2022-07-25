@@ -2,7 +2,6 @@ package com.example.ShareIt.booking.service;
 
 import com.example.ShareIt.booking.dto.BookingDto;
 import com.example.ShareIt.booking.dto.BookingPostDto;
-import com.example.ShareIt.booking.model.Booking;
 
 import java.util.Collection;
 import java.util.List;

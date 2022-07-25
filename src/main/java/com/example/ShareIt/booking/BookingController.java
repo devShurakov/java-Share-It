@@ -3,7 +3,6 @@ package com.example.ShareIt.booking;
 import com.example.ShareIt.booking.dto.BookingDto;
 import com.example.ShareIt.booking.dto.BookingPostDto;
 
-import com.example.ShareIt.booking.model.StateStatus;
 import com.example.ShareIt.booking.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
