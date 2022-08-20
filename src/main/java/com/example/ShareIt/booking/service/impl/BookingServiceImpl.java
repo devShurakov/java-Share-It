@@ -11,7 +11,6 @@ import com.example.ShareIt.booking.service.BookingService;
 import com.example.ShareIt.booking.storage.BookingRepository;
 import com.example.ShareIt.item.model.Item;
 import com.example.ShareIt.item.service.ItemService;
-import com.example.ShareIt.user.exception.UserNotFoundException;
 import com.example.ShareIt.user.model.User;
 import com.example.ShareIt.user.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
