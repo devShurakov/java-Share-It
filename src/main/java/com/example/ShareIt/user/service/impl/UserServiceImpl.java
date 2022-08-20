@@ -13,14 +13,14 @@ import java.util.Collection;
 
 @Service
 @Slf4j
-public class UserService implements com.example.ShareIt.user.service.UserService {
+public class UserServiceImpl implements com.example.ShareIt.user.service.UserService {
 
     private final UserRepository userRepository;
 
     private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
 
         this.userRepository = userRepository;
 
@@ -42,6 +42,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     public UserDto update(int userId, UserDto userDto) {
 
         User user = getUser(userId);
+
         if (userDto.getName() != null) {
             log.info("Update name to {}", userDto.getName());
             user.setName(userDto.getName());
@@ -57,7 +58,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     public UserDto getDtoUser(long userId) {
 
         User user = userRepository.findById((long) userId).orElseThrow(() -> {
-            log.warn("entity not found");
+            log.warn("Entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
         });
         return userMapper.mapToUserDto(user);
@@ -66,7 +67,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     public User getUser(long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> {
-            log.warn("entity not found");
+            log.warn("Entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
         });
         return user;
@@ -75,7 +76,7 @@ public class UserService implements com.example.ShareIt.user.service.UserService
     public Collection<UserDto> getAllUsers() {
 
         Collection<User> userItems = userRepository.findAll();
-        log.info("all users");
+        log.info("All users");
         return userMapper.maptoAllUserDto(userItems);
     }
 

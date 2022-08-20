@@ -1,7 +1,6 @@
 package com.example.ShareIt.item.mapper;
 
 import com.example.ShareIt.booking.model.Booking;
-import com.example.ShareIt.user.exception.InvalidUserIdException;
 import com.example.ShareIt.item.dto.ItemDto;
 import com.example.ShareIt.item.dto.ItemForResultDto;
 import com.example.ShareIt.item.model.Item;
@@ -16,26 +15,25 @@ public class ItemMapper {
     public static ItemForResultDto mapToItemForResultDto(Item item) {
 
         ItemForResultDto itemForResult = new ItemForResultDto();
+
         itemForResult.setId(item.getId());
         itemForResult.setName(item.getName());
         itemForResult.setDescription(item.getDescription());
         itemForResult.setAvailable(item.getAvailable());
         itemForResult.setComments(null);
 
+        if (item.getRequest() != null) {
+            itemForResult.setRequestId(item.getRequest().getId());
+        } else {
+            itemForResult.setRequestId(null);
+        }
+
         return itemForResult;
     }
 
-    public Item mapToItem(ItemDto itemDto, int userId) {
+    public Item mapToItem(ItemForResultDto itemDto) {
 
         Item item = new Item();
-
-        if (String.valueOf(itemDto.getAvailable()).isEmpty()) {
-            throw new InvalidUserIdException("cannot be null");
-        }
-
-        if (itemDto.getName().isEmpty() || itemDto.getDescription().isEmpty()) {
-            throw new InvalidUserIdException("cannot be null");
-        }
 
         item.setId(itemDto.getId());
         item.setName(itemDto.getName());
@@ -48,6 +46,7 @@ public class ItemMapper {
     public ItemDto mapToItemDto(Item item) {
 
         ItemDto itemDto = new ItemDto();
+
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
@@ -63,6 +62,7 @@ public class ItemMapper {
         for (Item x : item) {
             dtos.add(mapToItemDto(x));
         }
+
         return dtos;
     }
 
@@ -75,7 +75,7 @@ public class ItemMapper {
         item.setId(booking.getId());
         item.setBookerId(booking.getBooker().getId());
 
-        return  item;
+        return item;
     }
 
     public ItemForResultDto mapToItemForResultDtoUserBooking(Item item) {
@@ -90,7 +90,8 @@ public class ItemMapper {
         itemForResult.setLastBooking(null);
         itemForResult.setNextBooking(null);
 
-        return  itemForResult;
+        return itemForResult;
     }
+
 
 }
