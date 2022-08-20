@@ -34,7 +34,7 @@ public class UserServiceImpl implements com.example.ShareIt.user.service.UserSer
                 throw new RuntimeException();
             }
         });
-        User user = userRepository.save(UserMapper.mapToUser(userDto));
+        User user = userRepository.save(userMapper.mapToUser(userDto));
         log.info("User created");
         return userMapper.mapToUserDto(user);
     }

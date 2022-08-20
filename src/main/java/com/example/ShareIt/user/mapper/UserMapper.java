@@ -2,6 +2,7 @@ package com.example.ShareIt.user.mapper;
 
 import com.example.ShareIt.user.dto.UserDto;
 import com.example.ShareIt.user.model.User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+//@Component
 public class UserMapper {
     public static User mapToUser(UserDto userDto) {
 
