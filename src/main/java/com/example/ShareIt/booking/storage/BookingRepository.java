@@ -44,4 +44,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                                                                           LocalDateTime now,
                                                                                           LocalDateTime now1,
                                                                                           Pageable page);
+
+    Collection<Booking> findBookingsByBookerIdAndStartAfterOrderByStartDesc(Long id);
 }

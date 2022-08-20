@@ -46,7 +46,7 @@ class UserControllerTest {
             "Alex@mail.ru");
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         mvc = MockMvcBuilders
                 .standaloneSetup(controller)
                 .build();
