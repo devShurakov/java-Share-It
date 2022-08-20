@@ -48,7 +48,7 @@ public class RequestsControllerTest {
 
     @Test
     void createTest() throws Exception {
-        when(service.create(any(),any()))
+        when(service.create(anyInt(),any()))
                 .thenReturn(requestDto);
 
         mvc.perform(post("/requests")
