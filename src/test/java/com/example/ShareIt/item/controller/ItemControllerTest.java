@@ -76,7 +76,7 @@ public class ItemControllerTest {
                 .thenReturn(itemOne);
 
         mvc.perform(post("/items")
-                        .header("X-Sharer-User-Id", 1l)
+                        .header("X-Sharer-User-Id", 1L)
                         .content(mapper.writeValueAsString(itemOne))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +94,7 @@ public class ItemControllerTest {
                 .thenReturn(itemOneUpdated);
 
         mvc.perform(patch("/items/1")
-                        .header("X-Sharer-User-Id", 1l)
+                        .header("X-Sharer-User-Id", 1L)
                         .content(mapper.writeValueAsString(itemOne))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -112,7 +112,7 @@ public class ItemControllerTest {
                 .thenReturn(List.of(itemOne, itemTwo));
 
         mvc.perform(get("/items")
-                        .header("X-Sharer-User-Id", 1l)
+                        .header("X-Sharer-User-Id", 1L)
                         .characterEncoding(StandardCharsets.UTF_8)
                         .accept(MediaType.APPLICATION_JSON)
                         .param("size", "0")

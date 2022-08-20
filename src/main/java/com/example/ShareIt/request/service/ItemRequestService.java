@@ -124,7 +124,7 @@ public class ItemRequestService {
 
         List<ItemRequestDto> listOfRequests = new ArrayList<>();
 
-        for(ItemRequest x : collection){
+        for (ItemRequest x : collection) {
             List<ItemForResultDto> items = itemRepository.findAllByRequestId(x.getId())
                     .stream()
                     .map((Item item) -> ItemMapper.mapToItemForResultDto(item))

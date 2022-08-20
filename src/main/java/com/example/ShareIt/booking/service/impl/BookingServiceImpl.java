@@ -123,11 +123,11 @@ public class BookingServiceImpl implements BookingService {
 
         Pageable page = checkPage(from, size);
 
-        try{
-        if(userService.getUser(userId) ==null){
+        try {
+        if (userService.getUser(userId) == null) {
             return Collections.emptyList();
         }
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             System.out.printf("entities not found");
         }
 
@@ -176,11 +176,11 @@ public class BookingServiceImpl implements BookingService {
         String status = state.toUpperCase();
         Pageable page = checkPage(from, size);
 
-        try{
+        try {
             if (userService.getUser(userId) ==null) {
                 return Collections.emptyList();
             }
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e){
             System.out.printf("Entities not found");
         }
 

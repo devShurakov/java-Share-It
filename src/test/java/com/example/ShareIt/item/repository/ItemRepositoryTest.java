@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class temRepositoryTest {
+public class ItemRepositoryTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private ItemRepository itemRepository;
 
-    User user = new User(1l, "Denis", "Denis@mail.ru");
+    User user = new User(1L, "Denis", "Denis@mail.ru");
 
     Item itemDto1 = new Item(
             1L,

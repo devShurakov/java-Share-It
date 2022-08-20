@@ -46,7 +46,7 @@ public class BookingControllerTest {
     }
 
     private BookingDto.User user = new BookingDto.User(
-            1l,
+            1L,
             "Denis");
     private BookingDto.Item item = new BookingDto.Item(
             1L,
