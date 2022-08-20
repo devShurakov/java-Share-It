@@ -1,16 +1,13 @@
 package com.example.ShareIt.item.dto;
 
-import com.example.ShareIt.user.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+
 
 import static org.assertj.core.api.BDDAssertions.then;
 
