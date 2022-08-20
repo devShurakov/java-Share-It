@@ -43,7 +43,7 @@ public class BookingController {
     public Collection<BookingDto> getAllForUser(@RequestParam(defaultValue = "ALL") String state,
                                                 @RequestHeader(name = header) long userId,
                                                 @RequestParam(defaultValue = "0") int from,
-                                                @RequestParam(defaultValue = "10") int size){
+                                                @RequestParam(defaultValue = "10") int size) {
         return bookingService.getAllForUser(userId, state, from, size);
     }
 

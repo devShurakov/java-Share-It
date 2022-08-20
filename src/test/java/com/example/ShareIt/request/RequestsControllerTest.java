@@ -40,9 +40,9 @@ public class RequestsControllerTest {
                 .build();
     }
 
-    ItemRequestDto.User user = new ItemRequestDto.User(1l, "Denis");
+    ItemRequestDto.User user = new ItemRequestDto.User(1L, "Denis");
 
-    ItemRequestDto requestDto = new ItemRequestDto(1l, "description", user, null,null);
+    ItemRequestDto requestDto = new ItemRequestDto(1L, "description", user, null,null);
 
     @Test
     void createTest() throws Exception {
