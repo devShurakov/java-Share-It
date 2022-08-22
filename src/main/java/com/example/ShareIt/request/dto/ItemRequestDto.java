@@ -1,12 +1,16 @@
 package com.example.ShareIt.request.dto;
 
+import com.example.ShareIt.item.dto.ItemForResultDto;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Validated
 @Data
 public class ItemRequestDto {
 
@@ -15,11 +19,12 @@ public class ItemRequestDto {
     @NotNull
     private String description;
 
-    @NotNull
     private User request;
 
-    @NotNull
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
+
+    private List<ItemForResultDto> items;
+
 
 
     @Getter

@@ -7,6 +7,7 @@ import com.example.ShareIt.booking.exception.ItemFailedForBookingException;
 import com.example.ShareIt.booking.exception.ItemNotAvailableForBookingException;
 import com.example.ShareIt.item.ItemController;
 import com.example.ShareIt.item.exception.*;
+import com.example.ShareIt.request.ItemRequestController;
 import com.example.ShareIt.user.exception.EmailIsDublicated;
 import com.example.ShareIt.user.exception.InvalidUserIdException;
 import com.example.ShareIt.user.exception.UserHaveNoAccessException;
@@ -23,8 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
-@RestControllerAdvice(assignableTypes = {UserController.class, ItemController.class, BookingController.class})
+@RestControllerAdvice(assignableTypes = {UserController.class, ItemController.class, BookingController.class, ItemRequestController.class})
 public class ErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -107,6 +109,17 @@ public class ErrorHandler {
     @ExceptionHandler(CommentFailedException.class)
     public void statusCodeIs400CommentFailedException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public void statusCodeIs404NoSuchElementException(HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.NOT_FOUND.value());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String,String> stateIsNotValid(final IllegalStateException e) {
+        return Map.of("error", String.format(e.getMessage()));
     }
 
 }

@@ -18,12 +18,18 @@ import com.example.ShareIt.item.dto.ItemDto;
 import com.example.ShareIt.item.model.Item;
 import com.example.ShareIt.item.storage.CommentRepository;
 import com.example.ShareIt.item.storage.ItemRepository;
-import com.example.ShareIt.user.service.impl.UserService;
+import com.example.ShareIt.request.model.ItemRequest;
+import com.example.ShareIt.request.service.ItemRequestService;
+import com.example.ShareIt.user.exception.InvalidUserIdException;
+import com.example.ShareIt.user.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemMapper itemMapper;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     private final BookingRepository bookingRepository;
 
@@ -46,10 +52,13 @@ public class ItemServiceImpl implements ItemService {
 
     private final CommentRepository commentRepository;
 
+    private final ItemRequestService itemRequestService;
+
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper, UserService userService,
+    public ItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper, UserServiceImpl userService,
                            BookingRepository bookingRepository, CommentMapper commentMapper,
-                           CommentRepository commentRepository, BookingMapper bookingMapper) {
+                           CommentRepository commentRepository, BookingMapper bookingMapper,
+                           ItemRequestService itemRequestService) {
 
         this.itemRepository = itemRepository;
 
@@ -64,14 +73,34 @@ public class ItemServiceImpl implements ItemService {
         this.commentRepository = commentRepository;
 
         this.bookingMapper = bookingMapper;
+
+        this.itemRequestService = itemRequestService;
     }
 
-    public ItemDto create(int userId, ItemDto itemDto) {
 
-        Item item = itemMapper.mapToItem(itemDto, userId);
+    public ItemForResultDto create(int userId, ItemForResultDto itemForResultDto) {
+
+        if (itemForResultDto.getAvailable() == null) {
+            throw new InvalidUserIdException("Cannot be null");
+        }
+
+        if (itemForResultDto.getName().isEmpty()) {
+            throw new InvalidUserIdException("Cannot be null");
+        }
+
+        ItemRequest request = null;
+        if (itemForResultDto.getRequestId() != null) {
+            request = itemRequestService.getRequestById(itemForResultDto.getRequestId());
+        }
+
+        Item item = itemMapper.mapToItem(itemForResultDto);
         item.setOwner(userService.getUser(userId));
+        item.setRequest(request);
+        if (itemForResultDto.getRequestId() != null) {
+            item.setRequest(itemRequestService.getRequestById(itemForResultDto.getRequestId()));
+        }
 
-        return itemMapper.mapToItemDto(itemRepository.save(item));
+        return itemMapper.mapToItemForResultDto(itemRepository.save(item));
     }
 
     public ItemDto update(int userId, int itemId, ItemDto itemDto) {
@@ -109,14 +138,15 @@ public class ItemServiceImpl implements ItemService {
         LocalDateTime now = LocalDateTime.now();
 
         ItemForResultDto itemForOwner = itemMapper.mapToItemForResultDto(item);
-            itemForOwner.setComments(commentMapper
-                    .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
+        itemForOwner.setComments(commentMapper
+                .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
 
         if (item.getOwner().getId() == userId) {
             itemForOwner.setNextBooking(getLastBooking(itemId, now));
             itemForOwner.setLastBooking(getPreviousBooking(itemId, now));
             itemForOwner.setComments(commentMapper
                     .mapToCommentDtoCollection(commentRepository.findAllByItem_Id(itemId)));
+
             return itemForOwner;
         }
 
@@ -149,9 +179,12 @@ public class ItemServiceImpl implements ItemService {
                 new ItemNotFoundException(String.format("Entity with id %d not found", itemId)));
     }
 
-    public Collection<ItemForResultDto> getAllItems(int userId) {
+    public Collection<ItemForResultDto> getAllItems(long userId, int from, int size) {
 
-        Collection<Item> userItems = itemRepository.findAll()
+        Pageable page = PageRequest.of(from, size);
+
+        List<Item> userItems = itemRepository.findAllItemsByOwnerIdOrderByIdAsc(userId, page)
+
                 .stream()
                 .filter(item -> item.getOwner().getId() == userId)
                 .collect(Collectors.toList());
@@ -166,6 +199,7 @@ public class ItemServiceImpl implements ItemService {
             item.setLastBooking(getPreviousBooking(x.getId(), now));
             returnColl.add(item);
         }
+
 
         return returnColl;
     }
@@ -197,13 +231,26 @@ public class ItemServiceImpl implements ItemService {
         return bookingMapper.maptoAllBookingToDto(bookingRepository.findAllByBooker_IdAndItem_Id(userId, itemId));
     }
 
-    public Collection<ItemDto> search(String text) {
+    @Override
+    public Collection<ItemDto> search(String text, int from, int size) {
+
+        Pageable page = checkPageBorders(from, size);
 
         if (text.isBlank()) {
             return Collections.emptyList();
         }
 
-        return itemMapper.maptoAllItemDto(itemRepository.search(text));
+        return itemMapper.maptoAllItemDto(itemRepository.search(text, page));
+    }
+
+    @Override
+    public Collection<Item> searchAvailableItems(String text) {
+
+        if (text.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        return itemRepository.search(text);
     }
 
     private boolean check(Long userId, Item item) {
@@ -213,5 +260,15 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return false;
+    }
+
+    private Pageable checkPageBorders(int from, int size) {
+        if (from < 0) {
+            throw new ValidationException(String.format("incorrect value for from %d.", from));
+        }
+        if (size < 1) {
+            throw new ValidationException(String.format("incorrect value for size %d.", size));
+        }
+        return PageRequest.of(from, size);
     }
 }

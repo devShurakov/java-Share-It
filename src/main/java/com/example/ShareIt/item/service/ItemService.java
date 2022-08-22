@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public interface ItemService {
 
-    ItemDto create(int userId, ItemDto itemDto);
+    ItemForResultDto create(int userId, ItemForResultDto itemForResultDto);
 
     ItemDto update(int userId, int itemId, ItemDto itemDto);
 
@@ -18,10 +18,11 @@ public interface ItemService {
 
     ItemForResultDto getAll(int userId, long itemId);
 
-    Collection<ItemForResultDto> getAllItems(int userId);
+    Collection<ItemForResultDto> getAllItems(long userId, int from, int size);
 
-    Collection<ItemDto> search(String text);
+    Collection<ItemDto> search(String text, int from, int size);
 
     CommentDto createComment(CommentDto commentDto, long userId, Long itemId);
 
+    Collection<Item> searchAvailableItems(String text);
 }
