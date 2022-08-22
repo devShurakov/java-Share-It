@@ -5,16 +5,15 @@ import com.example.ShareIt.booking.dto.BookingDto;
 import com.example.ShareIt.booking.dto.BookingPostDto;
 import com.example.ShareIt.booking.model.BookingStatus;
 import com.example.ShareIt.booking.service.impl.BookingServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -28,22 +27,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(BookingController.class)
+@AutoConfigureMockMvc
 public class BookingControllerTest {
-    @Mock
+    @MockBean
     private BookingServiceImpl service;
 
-    @InjectMocks
-    private BookingController controller;
-
+    @Autowired
     private MockMvc mvc;
 
-    @BeforeEach
-    void setUp() {
-        mvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .build();
-    }
 
     private BookingDto.User user = new BookingDto.User(
             1L,

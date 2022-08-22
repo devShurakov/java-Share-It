@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

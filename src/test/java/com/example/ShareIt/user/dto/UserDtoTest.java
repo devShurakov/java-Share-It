@@ -18,17 +18,14 @@ public class UserDtoTest {
 
     @Test
     void givenCorrectUserDtoTest() throws IOException {
-        // Given
         final long id = 1;
         final String name = "Name";
         final String email = "email@example.com";
 
         UserDto dto = new UserDto(id, name, email);
 
-        // When
         JsonContent<UserDto> result = json.write(dto);
 
-        // Then
         then(result).extractingJsonPathNumberValue("$.id").isEqualTo((int) id);
         then(result).extractingJsonPathStringValue("$.name").isEqualTo(name);
         then(result).extractingJsonPathStringValue("$.email").isEqualTo(email);

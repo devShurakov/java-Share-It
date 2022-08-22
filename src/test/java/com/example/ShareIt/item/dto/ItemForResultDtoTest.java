@@ -19,7 +19,6 @@ public class ItemForResultDtoTest {
 
     @Test
     void givenItemForResultTest() throws IOException {
-        // Given
         final long itemId = 1;
         final String itemName = "Item";
         final String itemDescription = "Description";
@@ -35,10 +34,8 @@ public class ItemForResultDtoTest {
                 null,
                 null);
 
-        // When
         JsonContent<ItemForResultDto> result = json.write(dto);
 
-        // Then
         then(result).extractingJsonPathNumberValue("$.id").isEqualTo((int) itemId);
         then(result).extractingJsonPathStringValue("$.name").isEqualTo(itemName);
         then(result).extractingJsonPathStringValue("$.description").isEqualTo(itemDescription);

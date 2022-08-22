@@ -3,6 +3,7 @@ package com.example.ShareIt.item.model;
 import com.example.ShareIt.request.model.ItemRequest;
 import com.example.ShareIt.user.model.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -10,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

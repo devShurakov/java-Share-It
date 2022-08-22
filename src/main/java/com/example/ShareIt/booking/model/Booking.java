@@ -2,10 +2,13 @@ package com.example.ShareIt.booking.model;
 
 import com.example.ShareIt.item.model.Item;
 import com.example.ShareIt.user.model.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Data
 @Entity
