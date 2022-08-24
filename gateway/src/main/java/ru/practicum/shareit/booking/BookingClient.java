@@ -25,7 +25,7 @@ public class BookingClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(Long userId, com.example.ShareIt.booking.dto.BookingPostDto BookingPostDto) {
+    public ResponseEntity<Object> create(Long userId, BookingPostDto BookingPostDto) {
         return post("", userId, BookingPostDto);
     }
 

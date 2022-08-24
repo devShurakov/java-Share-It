@@ -1,9 +1,9 @@
 package com.example.ShareIt.booking;
 
-import com.example.ShareIt.booking.dto.BookingDto;
-import com.example.ShareIt.booking.dto.BookingPostDto;
+import ru.practicum.shareit.booking.BookingDto;
+import ru.practicum.shareit.booking.BookingPostDto;
 
-import com.example.ShareIt.booking.service.BookingService;
+import ru.practicum.shareit.booking.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

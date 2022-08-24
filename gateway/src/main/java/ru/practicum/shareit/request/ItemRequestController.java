@@ -1,6 +1,5 @@
 package ru.practicum.shareit.request;
 
-import com.example.ShareIt.request.dto.ItemRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

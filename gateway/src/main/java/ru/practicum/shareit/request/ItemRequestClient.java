@@ -26,7 +26,7 @@ public class ItemRequestClient  extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(int userId, com.example.ShareIt.request.dto.ItemRequestDto itemRequestDto) {
+    public ResponseEntity<Object> create(int userId, ItemRequestDto itemRequestDto) {
         return post("", userId, itemRequestDto);
     }
 

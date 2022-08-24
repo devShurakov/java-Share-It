@@ -1,7 +1,7 @@
 package com.example.ShareIt.request;
 
-import com.example.ShareIt.request.dto.ItemRequestDto;
-import com.example.ShareIt.request.service.ItemRequestService;
+import ru.practicum.shareit.request.ItemRequestDto;
+import ru.practicum.shareit.request.ItemRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

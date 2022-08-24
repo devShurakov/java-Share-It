@@ -1,9 +1,5 @@
 package ru.practicum.shareit.item;
 
-import com.example.ShareIt.item.dto.CommentDto;
-import com.example.ShareIt.item.dto.ItemDto;
-import com.example.ShareIt.item.dto.ItemForResultDto;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

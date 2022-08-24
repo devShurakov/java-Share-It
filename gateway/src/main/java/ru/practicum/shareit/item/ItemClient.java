@@ -26,11 +26,11 @@ public class ItemClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(int userId, com.example.ShareIt.item.dto.ItemForResultDto itemForResultDto) {
+    public ResponseEntity<Object> create(int userId, ItemForResultDto itemForResultDto) {
         return post("", userId, itemForResultDto);
     }
 
-    public ResponseEntity<Object> update(int userId, int itemId, com.example.ShareIt.item.dto.ItemDto itemDto) {
+    public ResponseEntity<Object> update(int userId, int itemId, ItemDto itemDto) {
         return patch("/" + itemId, userId, itemDto);
     }
 
@@ -56,7 +56,7 @@ public class ItemClient extends BaseClient {
         return get("/" + itemId, userId);
     }
 
-    public ResponseEntity<Object> createComment( com.example.ShareIt.item.dto.CommentDto commentDto, int userId, int itemId) {
+    public ResponseEntity<Object> createComment(CommentDto commentDto, int userId, int itemId) {
         return post("/" + itemId + "/comment", userId, commentDto);
     }
 

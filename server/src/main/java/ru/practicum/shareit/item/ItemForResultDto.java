@@ -1,4 +1,4 @@
-package com.example.ShareIt.item.dto;
+package ru.practicum.shareit.item;
 
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +26,7 @@ public class ItemForResultDto {
 
     private Boolean available;
 
-    private List<ru.practicum.shareit.item.ItemForResultDto.Comment> comments;
+    private List<ItemForResultDto.Comment> comments;
 
     private Booking lastBooking;
 

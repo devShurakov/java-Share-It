@@ -1,11 +1,10 @@
 package com.example.ShareIt.user;
 
-import com.example.ShareIt.user.dto.UserDto;
-import com.example.ShareIt.user.service.impl.UserServiceImpl;
+import ru.practicum.shareit.user.UserDto;
+import ru.practicum.shareit.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 

@@ -1,6 +1,5 @@
-package ru.practicum.shareit.booking.dto;
+package ru.practicum.shareit.booking;
 
-import ru.practicum.shareit.booking.BookingStatus;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

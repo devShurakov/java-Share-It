@@ -24,11 +24,11 @@ public class UserClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(com.example.ShareIt.user.dto.UserDto userDto) {
+    public ResponseEntity<Object> create(UserDto userDto) {
         return post("", userDto);
     }
 
-    public ResponseEntity<Object> update(Long userId, com.example.ShareIt.user.dto.UserDto userDto) {
+    public ResponseEntity<Object> update(Long userId, UserDto userDto) {
         return patch("/" + userId, userDto);
     }
 

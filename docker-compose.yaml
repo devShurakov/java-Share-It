@@ -32,6 +32,6 @@ services:
     volumes:
       - /var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=shareit
+      - POSTGRES_DB=shareIt
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=iamroot
+      - POSTGRES_PASSWORD=root
