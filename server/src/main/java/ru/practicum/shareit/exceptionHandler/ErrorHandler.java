@@ -1,12 +1,10 @@
-package com.example.ShareIt.exceptionHandler;
+package ru.practicum.shareit.exceptionHandler;
 
-import com.example.ShareIt.booking.BookingController;
 import com.example.ShareIt.booking.exception.BookingAlreadyApprovedException;
 import com.example.ShareIt.booking.exception.BookingNotFoundException;
 import com.example.ShareIt.booking.exception.ItemFailedForBookingException;
 import com.example.ShareIt.booking.exception.ItemNotAvailableForBookingException;
 import com.example.ShareIt.item.ItemController;
-import com.example.ShareIt.item.exception.*;
 import com.example.ShareIt.request.ItemRequestController;
 import com.example.ShareIt.user.exception.EmailIsDublicated;
 import com.example.ShareIt.user.exception.InvalidUserIdException;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.practicum.shareit.booking.BookingController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
@@ -46,17 +45,17 @@ public class ErrorHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(InvalidItemException.class)
+    @ExceptionHandler(com.example.ShareIt.item.exception.InvalidItemException.class)
     public void statusCodeIs400forItems(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(ItemDoesNotBelongException.class)
+    @ExceptionHandler(com.example.ShareIt.item.exception.ItemDoesNotBelongException.class)
     public void statusCodeIs404forItems(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
 
-    @ExceptionHandler(ItemNotFoundException.class)
+    @ExceptionHandler(com.example.ShareIt.item.exception.ItemNotFoundException.class)
     public void statusCodeIs404forItemsWhenNotFound(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
@@ -101,12 +100,12 @@ public class ErrorHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(UserNotBookedItemException.class)
+    @ExceptionHandler(com.example.ShareIt.item.exception.UserNotBookedItemException.class)
     public void statusCodeIs400CommentException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(CommentFailedException.class)
+    @ExceptionHandler(com.example.ShareIt.item.exception.CommentFailedException.class)
     public void statusCodeIs400CommentFailedException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }

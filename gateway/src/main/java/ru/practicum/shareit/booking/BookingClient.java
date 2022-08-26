@@ -25,8 +25,8 @@ public class BookingClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(Long userId, BookingPostDto BookingPostDto) {
-        return post("", userId, BookingPostDto);
+    public ResponseEntity<Object> create(Long userId, BookingPostDto bookingPostDto) {
+        return post("", userId, bookingPostDto);
     }
 
     public ResponseEntity<Object> aproveBooking(Long userId, Long bookingId,
