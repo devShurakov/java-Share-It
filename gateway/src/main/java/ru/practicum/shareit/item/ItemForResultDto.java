@@ -1,4 +1,4 @@
-package com.example.ShareIt.item.dto;
+package ru.practicum.shareit.item;
 
 import lombok.*;
 import org.springframework.validation.annotation.Validated;

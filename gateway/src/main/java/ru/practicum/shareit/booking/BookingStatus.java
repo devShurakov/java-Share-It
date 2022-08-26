@@ -1,4 +1,4 @@
-package com.example.ShareIt.booking.model;
+package ru.practicum.shareit.booking;
 
 import lombok.Getter;
 import lombok.ToString;

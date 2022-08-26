@@ -1,4 +1,4 @@
-package com.example.ShareIt.booking.model;
+package ru.practicum.shareit.booking;
 
 public enum StateStatus {
 

@@ -1,4 +1,4 @@
-package com.example.ShareIt.item.dto;
+package ru.practicum.shareit.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

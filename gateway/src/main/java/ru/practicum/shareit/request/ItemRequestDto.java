@@ -1,4 +1,4 @@
-package com.example.ShareIt.request.dto;
+package ru.practicum.shareit.request;
 
 import ru.practicum.shareit.item.ItemForResultDto;
 import lombok.*;
