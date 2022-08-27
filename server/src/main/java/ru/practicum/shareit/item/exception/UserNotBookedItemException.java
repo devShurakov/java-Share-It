@@ -1,4 +1,4 @@
-package com.example.ShareIt.item.exception;
+package ru.practicum.shareit.item.exception;
 
 public class UserNotBookedItemException extends RuntimeException {
     public UserNotBookedItemException(String message) {

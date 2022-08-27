@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
+
 
 @Controller
 @RequestMapping(value = "/bookings")
@@ -28,30 +30,32 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> aproveBooking(@PathVariable("bookingId") long bookingId, @RequestHeader(name = header) long userId,
-                                    @RequestParam boolean approved) {
+    public ResponseEntity<Object> aproveBooking(@PathVariable("bookingId") long bookingId,
+                                                @RequestHeader(name = header) long userId,
+                                                @RequestParam boolean approved) {
         return bookingClient.aproveBooking(bookingId, userId, approved);
     }
 
 
     @GetMapping("/{bookingId}")
-    public ResponseEntity<Object> getBooking(@PathVariable("bookingId") Long bookingId, @RequestHeader(name = header) long userId) {
+    public ResponseEntity<Object> getBooking(@PathVariable("bookingId") long bookingId,
+                                             @RequestHeader(name = header) long userId) {
         return bookingClient.getById(bookingId, userId);
     }
 
     @GetMapping()
     public ResponseEntity<Object> getAllForUser(@RequestParam(defaultValue = "ALL") String state,
                                                 @RequestHeader(name = header) long userId,
-                                                @RequestParam(defaultValue = "0") int from,
-                                                @RequestParam(defaultValue = "10") int size) {
+                                                @Min(0) @RequestParam(defaultValue = "0") int from,
+                                                @Min(1) @RequestParam(defaultValue = "10") int size) {
         return bookingClient.getAllForUser(userId, state, from, size);
     }
 
     @GetMapping("/owner")
     public ResponseEntity<Object> getAllByForOwner(@RequestParam(defaultValue = "ALL") String state,
                                                    @RequestHeader(name = header) long userId,
-                                                   @RequestParam(defaultValue = "0") int from,
-                                                   @RequestParam(defaultValue = "10") int size) {
+                                                   @Min(0) @RequestParam(defaultValue = "0") int from,
+                                                   @Min(1) @RequestParam(defaultValue = "10") int size) {
         return bookingClient.getAllByForOwner(userId, state, from, size);
     }
 

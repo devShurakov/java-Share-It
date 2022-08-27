@@ -1,11 +1,5 @@
 package ru.practicum.shareit.item;
 
-
-import ru.practicum.shareit.item.CommentDto;
-import ru.practicum.shareit.item.ItemDto;
-import ru.practicum.shareit.item.ItemForResultDto;
-import ru.practicum.shareit.item.Item;
-
 import java.util.Collection;
 
 public interface ItemService {

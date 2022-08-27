@@ -1,16 +1,5 @@
 package ru.practicum.shareit.exceptionHandler;
 
-import com.example.ShareIt.booking.exception.BookingAlreadyApprovedException;
-import com.example.ShareIt.booking.exception.BookingNotFoundException;
-import com.example.ShareIt.booking.exception.ItemFailedForBookingException;
-import com.example.ShareIt.booking.exception.ItemNotAvailableForBookingException;
-import com.example.ShareIt.item.ItemController;
-import com.example.ShareIt.request.ItemRequestController;
-import com.example.ShareIt.user.exception.EmailIsDublicated;
-import com.example.ShareIt.user.exception.InvalidUserIdException;
-import com.example.ShareIt.user.exception.UserHaveNoAccessException;
-import com.example.ShareIt.user.exception.UserNotFoundException;
-import com.example.ShareIt.user.UserController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -18,6 +7,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.booking.BookingController;
+import ru.practicum.shareit.booking.exception.BookingAlreadyApprovedException;
+import ru.practicum.shareit.booking.exception.BookingNotFoundException;
+import ru.practicum.shareit.booking.exception.ItemFailedForBookingException;
+import ru.practicum.shareit.booking.exception.ItemNotAvailableForBookingException;
+import ru.practicum.shareit.item.ItemController;
+import ru.practicum.shareit.item.exception.*;
+import ru.practicum.shareit.request.ItemRequestController;
+import ru.practicum.shareit.user.UserController;
+import ru.practicum.shareit.user.UserServiceImpl;
+import ru.practicum.shareit.user.exception.*;
+import ru.practicum.shareit.user.exception.IncorrectParamException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
@@ -25,8 +25,17 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-@RestControllerAdvice(assignableTypes = {UserController.class, ItemController.class, BookingController.class, ItemRequestController.class})
+@RestControllerAdvice(assignableTypes = {UserController.class, ItemController.class, BookingController.class, ItemRequestController.class,
+        UserServiceImpl.class})
 public class ErrorHandler {
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse incorrectParamException(final IncorrectParamException e) {
+        return new ErrorResponse(
+                String.format("Ошибка с полем \"%s\".", e.getMessage())
+        );
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -45,17 +54,17 @@ public class ErrorHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(com.example.ShareIt.item.exception.InvalidItemException.class)
+    @ExceptionHandler(InvalidItemException.class)
     public void statusCodeIs400forItems(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(com.example.ShareIt.item.exception.ItemDoesNotBelongException.class)
+    @ExceptionHandler(ItemDoesNotBelongException.class)
     public void statusCodeIs404forItems(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
 
-    @ExceptionHandler(com.example.ShareIt.item.exception.ItemNotFoundException.class)
+    @ExceptionHandler(ItemNotFoundException.class)
     public void statusCodeIs404forItemsWhenNotFound(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
@@ -100,12 +109,12 @@ public class ErrorHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(com.example.ShareIt.item.exception.UserNotBookedItemException.class)
+    @ExceptionHandler(UserNotBookedItemException.class)
     public void statusCodeIs400CommentException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
-    @ExceptionHandler(com.example.ShareIt.item.exception.CommentFailedException.class)
+    @ExceptionHandler(CommentFailedException.class)
     public void statusCodeIs400CommentFailedException(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
@@ -119,6 +128,11 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> stateIsNotValid(final IllegalStateException e) {
         return Map.of("error", String.format(e.getMessage()));
+    }
+
+    @ExceptionHandler(DublicateEmailException.class)
+    public void dublicateEmailException(HttpServletResponse response) throws IOException {
+         response.sendError(HttpStatus.CONFLICT.value());
     }
 
 }

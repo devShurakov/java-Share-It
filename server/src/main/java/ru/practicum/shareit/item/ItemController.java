@@ -1,10 +1,5 @@
-package com.example.ShareIt.item;
+package ru.practicum.shareit.item;
 
-import ru.practicum.shareit.item.CommentDto;
-import ru.practicum.shareit.item.ItemDto;
-import ru.practicum.shareit.item.ItemForResultDto;
-import ru.practicum.shareit.item.ItemService;
-import ru.practicum.shareit.item.ItemServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

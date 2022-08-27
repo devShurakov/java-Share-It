@@ -1,6 +1,9 @@
 package ru.practicum.shareit.booking;
 
-import com.example.ShareIt.booking.exception.*;
+import ru.practicum.shareit.booking.exception.BookingAlreadyApprovedException;
+import ru.practicum.shareit.booking.exception.BookingNotFoundException;
+import ru.practicum.shareit.booking.exception.ItemFailedForBookingException;
+import ru.practicum.shareit.booking.exception.ItemNotAvailableForBookingException;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.user.User;

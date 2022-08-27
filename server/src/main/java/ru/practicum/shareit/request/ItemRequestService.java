@@ -1,10 +1,10 @@
 package ru.practicum.shareit.request;
 
 import ru.practicum.shareit.item.ItemForResultDto;
-import com.example.ShareIt.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemRepository;
+import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

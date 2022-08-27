@@ -1,4 +1,4 @@
-package com.example.ShareIt.request.exception;
+package ru.practicum.shareit.request.exception;
 
 public class NoSuchElementException extends RuntimeException  {
 

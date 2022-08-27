@@ -1,9 +1,5 @@
 package ru.practicum.shareit.booking;
 
-import ru.practicum.shareit.booking.BookingDto;
-import ru.practicum.shareit.booking.BookingPostDto;
-
-import ru.practicum.shareit.booking.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +25,8 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public BookingDto aproveBooking(@PathVariable("bookingId") long bookingId, @RequestHeader(name = header) long userId,
+    public BookingDto aproveBooking(@PathVariable("bookingId") long bookingId,
+                                    @RequestHeader(name = header) long userId,
                                     @RequestParam boolean approved) {
         return bookingService.aproveBooking(bookingId, userId, approved);
     }

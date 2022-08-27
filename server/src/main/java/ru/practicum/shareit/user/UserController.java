@@ -1,7 +1,5 @@
-package com.example.ShareIt.user;
+package ru.practicum.shareit.user;
 
-import ru.practicum.shareit.user.UserDto;
-import ru.practicum.shareit.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +44,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{userId}")
-    public void delete(@PathVariable int userId) {
+    public void delete(@PathVariable long userId) {
 
         userService.delete(userId);
     }

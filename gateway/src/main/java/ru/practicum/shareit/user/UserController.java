@@ -41,8 +41,15 @@ public class UserController {
         return userClient.getDtoUser(userId);
     }
 
+    @GetMapping
+    public ResponseEntity<Object> getAllUsers() {
+
+        return userClient.getAllUsers();
+    }
+
+
     @DeleteMapping(value = "/{userId}")
-    public void delete(@PathVariable int userId) {
+    public void delete(@PathVariable long userId) {
 
         userClient.delete(userId);
     }

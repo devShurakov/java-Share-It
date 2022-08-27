@@ -1,4 +1,4 @@
-package com.example.ShareIt.item.exception;
+package ru.practicum.shareit.item.exception;
 
 public class ItemDoesNotBelongException extends RuntimeException {
     public ItemDoesNotBelongException(String message) {
