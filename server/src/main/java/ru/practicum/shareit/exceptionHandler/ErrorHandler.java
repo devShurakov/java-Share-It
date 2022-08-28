@@ -17,7 +17,6 @@ import ru.practicum.shareit.request.ItemRequestController;
 import ru.practicum.shareit.user.UserController;
 import ru.practicum.shareit.user.UserServiceImpl;
 import ru.practicum.shareit.user.exception.*;
-import ru.practicum.shareit.user.exception.IncorrectParamException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
@@ -28,14 +27,6 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice(assignableTypes = {UserController.class, ItemController.class, BookingController.class, ItemRequestController.class,
         UserServiceImpl.class})
 public class ErrorHandler {
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse incorrectParamException(final IncorrectParamException e) {
-        return new ErrorResponse(
-                String.format("Ошибка с полем \"%s\".", e.getMessage())
-        );
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

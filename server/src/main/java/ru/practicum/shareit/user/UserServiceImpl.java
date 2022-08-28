@@ -3,7 +3,7 @@ package ru.practicum.shareit.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.item.exception.IncorrectParamException;
+import ru.practicum.shareit.user.exception.DublicateEmailException;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.findAll().stream().forEach(i -> {
             if (i.getEmail() == userDto.getEmail()) {
-                throw new IncorrectParamException("email already exist");
+                throw new DublicateEmailException("email already exist");
             }
         });
         User user = userRepository.save(userMapper.mapToUser(userDto));
