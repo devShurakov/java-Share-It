@@ -1,5 +1,7 @@
 package ru.practicum.shareit.user;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.Collection;
 
 public interface UserService {
@@ -12,5 +14,5 @@ public interface UserService {
 
     Collection<UserDto> getAllUsers();
 
-    void delete(long userId);
+    HttpStatus delete(int userId);
 }

@@ -29,12 +29,10 @@ import java.util.NoSuchElementException;
         UserServiceImpl.class})
 public class ErrorHandler {
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse incorrectParamException(final IncorrectParamException e) {
-        return new ErrorResponse(
-                String.format("Ошибка с полем \"%s\".", e.getMessage())
-        );
+    @ExceptionHandler(IncorrectParamException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> duplicateEmailException(final IncorrectParamException e) {
+        return Map.of("error", String.format("Email already exists"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -48,6 +46,7 @@ public class ErrorHandler {
     public Map<String, String> dataIsNotValid(final ConstraintViolationException e) {
         return Map.of("error", "invalid item data");
     }
+
 
     @ExceptionHandler(InvalidUserIdException.class)
     public void statusCodeIs400(HttpServletResponse response) throws IOException {
@@ -69,7 +68,7 @@ public class ErrorHandler {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
 
-        @ExceptionHandler(ItemNotAvailableForBookingException.class)
+    @ExceptionHandler(ItemNotAvailableForBookingException.class)
     public void statusCodeIs400forBooking(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
@@ -80,8 +79,12 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public void statusCodeIs404(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.NOT_FOUND.value());
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public void statusCodeIs404(HttpServletResponse response) throws IOException {
+//        response.sendError(HttpStatus.NOT_FOUND.value());
+//    }
+    public Map<String, String>  statusCodeIs404(final UserNotFoundException e) throws IOException {
+        return Map.of("error", e.getMessage());
     }
 
     @ExceptionHandler(UserHaveNoAccessException.class)
@@ -90,9 +93,12 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(EmailIsDublicated.class)
-    public void statusCodeIs409(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.CONFLICT.value());
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> statusCodeIs409(final EmailIsDublicated e) throws RuntimeException {
+        return Map.of("error", e.getMessage());
+//        response.sendError(HttpStatus.CONFLICT.value(),response.);
     }
+
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     public void statusCodeIs500(HttpServletResponse response) throws IOException {
