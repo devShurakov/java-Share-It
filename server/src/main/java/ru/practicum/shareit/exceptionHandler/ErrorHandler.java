@@ -96,7 +96,6 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> statusCodeIs409(final EmailIsDublicated e) throws RuntimeException {
         return Map.of("error", e.getMessage());
-//        response.sendError(HttpStatus.CONFLICT.value(),response.);
     }
 
 
@@ -137,8 +136,9 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(DublicateEmailException.class)
-    public void dublicateEmailException(HttpServletResponse response) throws IOException {
-         response.sendError(HttpStatus.CONFLICT.value());
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String>  dublicateEmailException(final DublicateEmailException e) throws IOException {
+        return Map.of("error", e.getMessage());
     }
 
 }

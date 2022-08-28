@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.user.exception.DublicateEmailException;
 import ru.practicum.shareit.user.exception.EmailIsDublicated;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 
@@ -26,9 +27,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto create(UserDto userDto) {
-        User user = userRepository.save(userMapper.mapToUser(userDto));
-        log.info("User created");
-        return userMapper.mapToUserDto(user);
+        try {
+            User user = userRepository.save(userMapper.mapToUser(userDto));
+            log.info("User created");
+            return userMapper.mapToUserDto(user);
+        } catch (RuntimeException e) {
+            throw new DublicateEmailException("Email already exists");
+        }
     }
 
     public UserDto update(int userId, UserDto userDto) {
@@ -45,8 +50,11 @@ public class UserServiceImpl implements UserService {
             log.info("Update email to {}", userDto.getEmail());
             user.setEmail(userDto.getEmail());
         }
-
-        return userMapper.mapToUserDto(userRepository.save(user));
+        try {
+            return userMapper.mapToUserDto(userRepository.save(user));
+        } catch (RuntimeException e) {
+            throw new DublicateEmailException("Email already exists");
+        }
     }
 
     @Override
