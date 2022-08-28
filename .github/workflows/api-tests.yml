@@ -7,8 +7,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     steps:
+     
       - name: Checkout target repo
         uses: actions/checkout@v3
 
@@ -18,12 +19,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-
+      
       - name: Setup runner timezone
         uses: szenius/set-timezone@v1.0
         with:
-          timezoneLinux: "Europe/Moscow"
-
+           timezoneLinux: "Europe/Moscow"
+      
       - name: Install helper script
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y wget &&
           wget --no-check-certificate -P /tmp/ https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh &&
@@ -40,7 +41,6 @@ jobs:
         run: |
           chmod a+x ./tests/.github/workflows/build.sh
           ./tests/.github/workflows/build.sh
-
       - name: Install Node
         uses: actions/setup-node@v1
         with:
@@ -49,18 +49,14 @@ jobs:
       - name: Install newman
         run: |
           npm install -g newman
-
       - name: Run Application
         run: |
           chmod a+x ./tests/.github/workflows/run.sh
           ./tests/.github/workflows/run.sh
-
-
       - name: Waiting for application is up
         run: |
           /tmp/wait-for-it.sh -t 60 localhost:8080
           echo "Application is up"
-
       - name: Run POSTMAN tests
         run: |
           newman run ./tests/postman/sprint.json --delay-request 50 -r cli
