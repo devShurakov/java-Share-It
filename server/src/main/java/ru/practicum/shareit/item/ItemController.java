@@ -54,7 +54,6 @@ public class ItemController {
     public Collection<ItemDto> search(@RequestParam("text") String text,
                                       @RequestParam(defaultValue = "0") int from,
                                       @RequestParam(defaultValue = "10") int size) {
-
         return itemService.search(text, from, size);
     }
 

@@ -26,30 +26,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto create(UserDto userDto) {
-
-//        userRepository.findAll().stream().forEach(i -> {
-//            if (i.getEmail().equals(userDto.getEmail())) {
-//                throw new EmailIsDublicated(String.format("Email already exist."));
-//            }
-//        });
         User user = userRepository.save(userMapper.mapToUser(userDto));
         log.info("User created");
         return userMapper.mapToUserDto(user);
     }
 
     public UserDto update(int userId, UserDto userDto) {
-
         userRepository.findById((long) userId).orElseThrow(() -> {
-            return new EmailIsDublicated(String.format("Entities with id %d not found", userId));
+            throw new EmailIsDublicated(String.format("Entities with id %d not found", userId));
         });
 
         User user = getUser(userId);
-
         if (userDto.getName() != null) {
             log.info("Update name to {}", userDto.getName());
             user.setName(userDto.getName());
         }
-
         if (userDto.getEmail() != null) {
             log.info("Update email to {}", userDto.getEmail());
             user.setEmail(userDto.getEmail());
@@ -60,7 +51,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getDtoUser(long userId) {
-
         User user = userRepository.findById(userId).orElseThrow(() -> {
             log.warn("Entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
@@ -69,7 +59,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUser(long userId) {
-
         User user = userRepository.findById(userId).orElseThrow(() -> {
             log.warn("Entity not found");
             return new UserNotFoundException(String.format("Entities with id %d not found", userId));
@@ -78,7 +67,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Collection<UserDto> getAllUsers() {
-
         Collection<User> userItems = userRepository.findAll();
         log.info("All users");
         return userMapper.maptoAllUserDto(userItems);
@@ -86,9 +74,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public HttpStatus delete(int userId) {
-
         log.info("User was deleted");
-        userRepository.deleteById((long)userId);
+        userRepository.deleteById((long) userId);
         return HttpStatus.OK;
     }
 

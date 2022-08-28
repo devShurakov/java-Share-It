@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Controller
@@ -26,6 +29,17 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<Object> create(@RequestHeader(name = header) long userId,
                                          @RequestBody BookingPostDto bookingPostDto) {
+
+        if (bookingPostDto.getStart().isBefore(LocalDateTime.now())) {
+            throw new ValidationException("Booking time in the past.");
+        }
+        if (bookingPostDto.getEnd().isBefore(LocalDateTime.now())) {
+            throw new ValidationException("The end time of the booking is in the past.");
+        }
+        if (bookingPostDto.getStart().isAfter(bookingPostDto.getEnd())) {
+            throw new ValidationException("The start time of the booking is later than the end time of the booking.");
+        }
+
         return bookingClient.create(userId, bookingPostDto);
     }
 
@@ -48,7 +62,9 @@ public class BookingController {
                                                 @RequestHeader(name = header) long userId,
                                                 @Min(0) @RequestParam(defaultValue = "0") int from,
                                                 @Min(1) @RequestParam(defaultValue = "10") int size) {
-        return bookingClient.getAllForUser(userId, state, from, size);
+        checkPageBoarder(from, size);
+        String status = checkBookingStatus(state);
+        return bookingClient.getAllForUser(userId, status, from, size);
     }
 
     @GetMapping("/owner")
@@ -56,9 +72,27 @@ public class BookingController {
                                                    @RequestHeader(name = header) long userId,
                                                    @Min(0) @RequestParam(defaultValue = "0") int from,
                                                    @Min(1) @RequestParam(defaultValue = "10") int size) {
-        return bookingClient.getAllByForOwner(userId, state, from, size);
+        checkPageBoarder(from, size);
+        String status = checkBookingStatus(state);
+        return bookingClient.getAllByForOwner(userId, status, from, size);
     }
 
+    private String checkBookingStatus(String status) {
+        String status1 = status.toUpperCase();
+        if (!List.of("ALL", "CURRENT", "PAST", "FUTURE", "WAITING", "REJECTED", "APPROVED").contains(status)) {
+            throw new IllegalArgumentException(String.format("Unknown state: %s", status));
+        }
+        return status1;
+    }
+
+    private void checkPageBoarder(int from, int size) {
+        if (from < 0) {
+            throw new ValidationException(String.format("неверное значение from %d.", from));
+        }
+        if (size < 1) {
+            throw new ValidationException(String.format("неверное значение size %d.", size));
+        }
+    }
 
 
 }

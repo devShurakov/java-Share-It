@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
 @Controller
@@ -42,7 +43,7 @@ public class ItemRequestController {
                                         @NotNull int userId,
                                         @RequestParam(defaultValue = "0") int from,
                                         @RequestParam(defaultValue = "10") int size) {
-
+        checkPageBoarder(from,size);
         return itemRequestClient.getAllRequest(userId, from, size);
     }
 
@@ -53,6 +54,13 @@ public class ItemRequestController {
         return itemRequestClient.getItemRequestById(userId, requestId);
     }
 
-
+    private void checkPageBoarder(int from, int size) {
+        if (from < 0) {
+            throw new ValidationException(String.format("неверное значение from %d.", from));
+        }
+        if (size < 1) {
+            throw new ValidationException(String.format("неверное значение size %d.", size));
+        }
+    }
 
 }
