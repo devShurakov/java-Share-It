@@ -1,15 +1,12 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @RestController
-@Validated
 @RequestMapping(value = "/items")
 public class ItemController {
 
@@ -24,14 +21,14 @@ public class ItemController {
 
 
     @PostMapping
-    public ItemForResultDto create(@RequestHeader(name = header) @NotNull int userId,
+    public ItemForResultDto create(@RequestHeader(name = header) int userId,
                           @RequestBody @Valid ItemForResultDto itemForResultDto) {
 
         return itemService.create(userId, itemForResultDto);
     }
 
     @PatchMapping(value = "/{itemId}")
-    public ItemDto update(@RequestHeader(name = header) @NotNull int userId,
+    public ItemDto update(@RequestHeader(name = header) int userId,
                           @PathVariable int itemId,
                           @RequestBody ItemDto itemDto) {
 
@@ -39,7 +36,7 @@ public class ItemController {
     }
 
     @GetMapping(value = "/{itemId}")
-    public ItemForResultDto getItem(@RequestHeader(name = header) @NotNull int userId,
+    public ItemForResultDto getItem(@RequestHeader(name = header) int userId,
                                     @PathVariable long itemId) {
 
         return itemService.getAll(userId,itemId);
