@@ -25,7 +25,7 @@ public class ItemRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestHeader(name = header) @NotNull int userId,
+    public ResponseEntity<Object> create(@RequestHeader(name = header) @NotNull long userId,
                                          @RequestBody @Valid ItemRequestDto itemRequestDto) {
 
         return itemRequestClient.create(userId, itemRequestDto);

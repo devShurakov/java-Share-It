@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking;
 
+import org.springframework.data.domain.Sort;
 import ru.practicum.shareit.booking.exception.BookingAlreadyApprovedException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
 import ru.practicum.shareit.booking.exception.ItemFailedForBookingException;
@@ -115,7 +116,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingDto> getAllForUser(long userId, String state, int from, int size) {
 
-        Pageable page = checkPage(from, size);
+        int page1 = from / size;
+        Pageable page = PageRequest.of(page1, size, Sort.by("start").descending());
+//        Pageable page = checkPage(from, size);
 
         if (userService.getUser(userId) == null) {
             throw new BookingNotFoundException("Booking not Found");
@@ -164,7 +167,10 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingDto> getAllByForOwner(long userId, String state, int from, int size) {
 
         String status = state.toUpperCase();
-        Pageable page = checkPage(from, size);
+//        Pageable page = checkPage(from, size);
+
+        int page1 = from / size;
+        Pageable page = PageRequest.of(page1, size, Sort.by("start").descending());
 
             if (userService.getUser(userId) == null) {
                 throw new BookingNotFoundException("Booking not Found");

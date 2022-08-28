@@ -5,8 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.exception.IncorrectEmailexception;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
+
 
 
 @Controller
@@ -23,15 +27,29 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody @Valid UserDto userDto) {
-
+    public ResponseEntity<Object> create(@RequestBody @Valid UserDto userDto)  {
+        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
+            throw new IncorrectEmailexception("user.Email сan't be null or blank");
+        }
+        checkEmail(userDto.getEmail());
         return userClient.create(userDto);
+    }
+
+    private void checkEmail(String email) {
+        try {
+            InternetAddress emailAddress = new InternetAddress(email);
+            emailAddress.validate();
+        } catch (AddressException ex) {
+            throw new IncorrectEmailexception("user.Email should be in email format.");
+        }
     }
 
     @PatchMapping(value = "/{userId}")
     public ResponseEntity<Object>  update(@PathVariable int userId,
                           @RequestBody UserDto userDto) {
-
+        if (userDto.getEmail() != null) {
+            checkEmail(userDto.getEmail());
+        }
         return userClient.update((long) userId, userDto);
     }
 
@@ -49,9 +67,9 @@ public class UserController {
 
 
     @DeleteMapping(value = "/{userId}")
-    public void delete(@PathVariable long userId) {
+    public Object delete(@PathVariable int userId) {
 
-        userClient.delete(userId);
+        return userClient.delete(userId);
     }
 
 }

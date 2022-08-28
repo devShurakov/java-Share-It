@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,18 +42,19 @@ public class ItemRequestService {
         this.itemRepository = itemRepository;
     }
 
-    public ItemRequestDto create(int userId, ItemRequestDto itemRequestDto) {
+    public ItemRequestDto create(long userId, ItemRequestDto itemRequestDto) {
 
         userService.getUser(userId);
         User request = userService.getUser(userId);
 
         ItemRequest itemRequest = itemRequestMapper.toItemRequest(itemRequestDto);
 
-        itemRequest.getRequest().setId(userService.getUser(userId).getId());
+//        itemRequest.getRequest().setId(userId);
+//        itemRequest.getRequest().setId(userService.getUser(userId).getId());
         itemRequest.getRequest().setName(userService.getUser(userId).getName());
         itemRequest.getRequest().setEmail(userService.getUser(userId).getEmail());
         itemRequest.setRequest(request);
-
+        itemRequest.setCreated(LocalDateTime.now()); //todo под тесты
         return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest));
     }
 

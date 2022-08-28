@@ -3,8 +3,6 @@ package ru.practicum.shareit.request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @RestController
@@ -22,21 +20,21 @@ public class ItemRequestController {
     }
 
     @PostMapping
-    public ItemRequestDto create(@RequestHeader(name = header) @NotNull int userId,
-                                 @RequestBody @Valid ItemRequestDto itemRequestDto) {
+    public ItemRequestDto create(@RequestHeader(name = header) long userId,
+                                 @RequestBody ItemRequestDto itemRequestDto) {
 
         return itemRequestService.create(userId, itemRequestDto);
     }
 
     @GetMapping
-    public Collection<ItemRequestDto> getRequest(@RequestHeader(name = header) @NotNull long userId) {
+    public Collection<ItemRequestDto> getRequest(@RequestHeader(name = header) long userId) {
 
         return itemRequestService.getRequest(userId);
     }
 
     @GetMapping("/all")
     public Collection<ItemRequestDto>  getAllRequest(@RequestHeader("X-Sharer-User-Id")
-                                        @NotNull long userId,
+                                        long userId,
                                         @RequestParam(defaultValue = "0") int from,
                                         @RequestParam(defaultValue = "10") int size) {
 
@@ -44,7 +42,7 @@ public class ItemRequestController {
     }
 
     @GetMapping("/{requestId}")
-    public ItemRequestDto getItemRequestById(@RequestHeader("X-Sharer-User-Id") @NotNull long userId,
+    public ItemRequestDto getItemRequestById(@RequestHeader("X-Sharer-User-Id")  long userId,
                                              @PathVariable long requestId) {
 
         return itemRequestService.getItemRequestById(userId, requestId);
