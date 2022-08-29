@@ -54,18 +54,6 @@ public class BookingServiceImpl implements BookingService {
             throw new ItemNotAvailableForBookingException("Item is not available");
         }
 
-        if (bookingPost.getEnd().isBefore(LocalDateTime.now())) {
-            throw new ItemNotAvailableForBookingException("Booking end date in the past");
-        }
-
-        if (bookingPost.getStart().isBefore(LocalDateTime.now())) {
-            throw new ItemNotAvailableForBookingException("Booking date in the past");
-        }
-
-        if (bookingPost.getEnd().isBefore(bookingPost.getStart())) {
-            throw new ItemNotAvailableForBookingException("Booking date in the past");
-        }
-
         bookingPost.setBooker(user);
         bookingPost.setItem(item);
         bookingPost.setBookingStatus(BookingStatus.WAITING);
@@ -118,21 +106,11 @@ public class BookingServiceImpl implements BookingService {
 
         int page1 = from / size;
         Pageable page = PageRequest.of(page1, size, Sort.by("start").descending());
-//        Pageable page = checkPage(from, size);
 
         if (userService.getUser(userId) == null) {
             throw new BookingNotFoundException("Booking not Found");
         }
 
-        String status1 = state.toUpperCase();
-        if (status1.equals("ALL")) {
-            return bookingMapper.maptoAllBookingToDto(bookingRepository
-                    .findAllBookingsByBookerIdOrderByStartDesc(userId, page));
-        }
-
-        if (!List.of("CURRENT", "PAST", "FUTURE", "WAITING", "REJECTED", "APPROVED").contains(state)) {
-            throw new IllegalStateException(String.format("Unknown state: %s", state));
-        }
 
         switch (StateStatus.valueOf(state)) {
 
@@ -158,31 +136,19 @@ public class BookingServiceImpl implements BookingService {
                         .findBookingsByBookerIdAndBookingStatusOrderByStartDesc(userId, page,BookingStatus.WAITING));
 
             default:
-                return Collections.emptyList();
+                            return bookingMapper.maptoAllBookingToDto(bookingRepository
+                    .findAllBookingsByBookerIdOrderByStartDesc(userId, page));
 
         }
     }
 
     @Override
     public List<BookingDto> getAllByForOwner(long userId, String state, int from, int size) {
-
-        String status = state.toUpperCase();
-//        Pageable page = checkPage(from, size);
-
         int page1 = from / size;
         Pageable page = PageRequest.of(page1, size, Sort.by("start").descending());
 
-            if (userService.getUser(userId) == null) {
+        if (userService.getUser(userId) == null) {
                 throw new BookingNotFoundException("Booking not Found");
-        }
-
-        if (status.equals("ALL")) {
-            return bookingMapper.maptoAllBookingToDto(bookingRepository
-                    .findAllBookingsByItem_Owner_IdOrderByStartDesc(userId, page));
-        }
-
-        if (!List.of("CURRENT", "PAST", "FUTURE", "WAITING", "REJECTED", "APPROVED").contains(state)) {
-            throw new IllegalStateException(String.format("Unknown state: %s", state));
         }
 
         switch (StateStatus.valueOf(state)) {
@@ -209,18 +175,9 @@ public class BookingServiceImpl implements BookingService {
                         .findAllBookingsByItem_Owner_IdAndBookingStatusOrderByStartDesc(userId, page, BookingStatus.WAITING));
 
             default:
-                return Collections.emptyList();
+                            return bookingMapper.maptoAllBookingToDto(bookingRepository
+                    .findAllBookingsByItem_Owner_IdOrderByStartDesc(userId, page));
         }
-    }
-
-    private Pageable checkPage(int from, int size) {
-        if (from < 0) {
-            throw new RuntimeException(String.format("incorrect value for from %d.", from));
-        }
-        if (size < 1) {
-            throw new RuntimeException(String.format("incorrect value for size %d.", size));
-        }
-        return PageRequest.of(from, size);
     }
 
 }

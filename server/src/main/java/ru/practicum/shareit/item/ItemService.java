@@ -18,5 +18,4 @@ public interface ItemService {
 
     CommentDto createComment(CommentDto commentDto, long userId, Long itemId);
 
-    Collection<Item> searchAvailableItems(String text);
 }

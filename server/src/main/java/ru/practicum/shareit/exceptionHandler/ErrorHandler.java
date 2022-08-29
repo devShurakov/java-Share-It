@@ -80,9 +80,6 @@ public class ErrorHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public void statusCodeIs404(HttpServletResponse response) throws IOException {
-//        response.sendError(HttpStatus.NOT_FOUND.value());
-//    }
     public Map<String, String>  statusCodeIs404(final UserNotFoundException e) throws IOException {
         return Map.of("error", e.getMessage());
     }

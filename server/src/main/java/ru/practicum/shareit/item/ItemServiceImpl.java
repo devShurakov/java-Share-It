@@ -17,9 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.user.exception.InvalidUserIdException;
 
-import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,14 +67,6 @@ public class ItemServiceImpl implements ItemService {
 
 
     public ItemForResultDto create(int userId, ItemForResultDto itemForResultDto) {
-
-        if (itemForResultDto.getAvailable() == null) {
-            throw new InvalidUserIdException("Cannot be null");
-        }
-
-        if (itemForResultDto.getName().isEmpty()) {
-            throw new InvalidUserIdException("Cannot be null");
-        }
 
         ItemRequest request = null;
         if (itemForResultDto.getRequestId() != null) {
@@ -224,23 +214,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Collection<ItemDto> search(String text, int from, int size) {
 
-        Pageable page = checkPageBorders(from, size);
-
+        Pageable page = PageRequest.of(from,size);
         if (text.isBlank()) {
             return Collections.emptyList();
         }
 
         return itemMapper.maptoAllItemDto(itemRepository.search(text, page));
-    }
-
-    @Override
-    public Collection<Item> searchAvailableItems(String text) {
-
-        if (text.isBlank()) {
-            return Collections.emptyList();
-        }
-
-        return itemRepository.search(text);
     }
 
     private boolean check(Long userId, Item item) {
@@ -252,13 +231,4 @@ public class ItemServiceImpl implements ItemService {
         return false;
     }
 
-    private Pageable checkPageBorders(int from, int size) {
-        if (from < 0) {
-            throw new ValidationException(String.format("incorrect value for from %d.", from));
-        }
-        if (size < 1) {
-            throw new ValidationException(String.format("incorrect value for size %d.", size));
-        }
-        return PageRequest.of(from, size);
-    }
 }

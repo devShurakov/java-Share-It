@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,12 +48,10 @@ public class ItemRequestService {
 
         ItemRequest itemRequest = itemRequestMapper.toItemRequest(itemRequestDto);
 
-//        itemRequest.getRequest().setId(userId);
-//        itemRequest.getRequest().setId(userService.getUser(userId).getId());
         itemRequest.getRequest().setName(userService.getUser(userId).getName());
         itemRequest.getRequest().setEmail(userService.getUser(userId).getEmail());
         itemRequest.setRequest(request);
-        itemRequest.setCreated(LocalDateTime.now()); //todo под тесты
+        itemRequest.setCreated(LocalDateTime.now());
         return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest));
     }
 
@@ -79,12 +76,6 @@ public class ItemRequestService {
 
     public Collection<ItemRequestDto> getAllRequest(long userId, int from, int size) {
 
-        if (from < 0) {
-            throw new ValidationException(String.format("Incorrect value for from %d.", from));
-        }
-        if (size < 1) {
-            throw new ValidationException(String.format("Incorrect value for size %d.", size));
-        }
         Pageable page = PageRequest.of(from, size);
 
         Collection<ItemRequestDto> itemCollection = toItemRequestDtoCollections2(itemRequestRepository
