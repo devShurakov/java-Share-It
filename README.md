@@ -8,9 +8,7 @@
 Реализована микросервисная архитектура. Упаковано с помощью Docker.
 
 Технологический стэк:
-Java 11, Spring Boot, Postgres SQL, REST, MockMvc, Hibernate, Docker.
-![Java](https://img.shields.io/badge/-JavaScript-003f5c)
-
+![Java](https://img.shields.io/badge/-Java-green), ![Spring Boot] (https://img.shields.io/badge/-Spring%20Boot-blue),![Postgres SQL] https://img.shields.io/badge/-Postgres%20SQL-brightgreen, ![REST] (https://img.shields.io/badge/-REST-orange), ![MockMvc] (https://img.shields.io/badge/-MockMvc-red),![Hibernate] (https://img.shields.io/badge/-Hibernate-lightgrey),![Docker] (https://badgen.net/badge/icon/docker?icon=docker&label), ![Git] (https://badgen.net/badge/icon/github?icon=github&label)
 Функциональность:
 - Создание, редактирование профиля пользователей
 - Запрос на получение списка пользователей
