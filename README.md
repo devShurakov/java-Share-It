@@ -1,5 +1,6 @@
 # Приложение для обмена вещами между пользователями. Java-shareIt.
 #### Учебный проект
+[![ShareIt API Tests](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml)
     
             
 Описание:
