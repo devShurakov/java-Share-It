@@ -9,7 +9,7 @@
 
 Технологический стэк:
 Java 11, Spring Boot, Postgres SQL, REST, MockMvc, Hibernate, Docker.
-[![ShareIt API Tests](https://badgen.net/docker/stars/library/mongo?icon=docker&label=stars)
+(https://badgen.net/docker/stars/library/mongo?icon=docker&label=stars)
 
 Функциональность:
 - Создание, редактирование профиля пользователей
