@@ -9,6 +9,7 @@
 
 Технологический стэк:
 Java 11, Spring Boot, Postgres SQL, REST, MockMvc, Hibernate, Docker.
+https://img.shields.io/static/v1?label=<LABEL>&message=<MESSAGE>&color=<COLOR>
 (https://badgen.net/docker/stars/library/mongo?icon=docker&label=stars)
 
 Функциональность:
