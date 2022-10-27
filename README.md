@@ -3,7 +3,7 @@
 [![ShareIt API Tests](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml)
     
             
-Описание:
+## Описание:
 
 Бэкенд сервиса обмена вещами. В основе - работа с JPA репозиториями. API для доступа к данным. Микросервисная архитектура. Упаковано с помощью Docker.
 
@@ -22,13 +22,13 @@
 
 ## Тестирование проекта:
 
-Проверить работоспособность приложения, можно с помощью [готовой коллекции тестов](https://github.com/devShurakov/java-Explore-With-Me/tree/main/postman), например в Postman.
+Проверить работоспособность приложения, можно с помощью [готовой коллекции тестов](https://github.com/devShurakov/java-shareit/tree/main/postman) в Postman.
 
 ## Как запускать приложение ?
 
 * склонировать и открыть проект в IntelliJ IDEA 
 * запустить приложение Docker
-* выполнения сборку проекта
+* выполнения сборку проекта mvn package
 * далее в терминал запустить команду docker compose up и дождаться успешного запуска проекта в контейнерах Docker.
 
 ##  Технологический стек:
