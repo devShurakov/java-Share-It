@@ -1,4 +1,4 @@
-# Приложение для обмена вещами. Java-shareIt.
+# Share It. Приложение для обмена вещами. 
 ###### Пэт проект в рамках прохождения учебного курса Яндекс.
 [![ShareIt API Tests](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Gidrosliv/java-shareit/actions/workflows/api-tests.yml)
     
