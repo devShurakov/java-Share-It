@@ -22,6 +22,11 @@
 
 Проверить работоспособность приложения, можно с помощью [готовой коллекции тестов](https://github.com/devShurakov/java-shareit/tree/main/postman) в Postman.
 
+## Шаблоны проектирования:
+
+В приложении применяется один из шаблонов проектирования - Data Transfer Object(DTO Pattern),
+а также - Фабрика(Factory Design Pattern).
+
 ## Как запускать приложение ?
 
 * склонировать и открыть проект в IntelliJ IDEA 
